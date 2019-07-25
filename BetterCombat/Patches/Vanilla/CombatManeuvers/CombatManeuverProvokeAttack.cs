@@ -32,12 +32,35 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
         {
             if (evt.Type == ManeuverType && !evt.Initiator.Descriptor.HasFact(ImprovedManeuverFact))
             {
-                evt.Target.CombatState.AttackOfOpportunity(evt.Initiator);
+                RuleCombatManeuver_OnTrigger_AoO_Patch.AttackerTriggeredAttackOfOpportunity = true;
             }
         }
 
         public override void OnEventDidTrigger(RuleCombatManeuver evt)
         {
+        }
+    }
+
+    [Harmony12.HarmonyPatch(typeof(RuleCombatManeuver), nameof(RuleCombatManeuver.OnTrigger), Harmony12.MethodType.Normal)]
+    class RuleCombatManeuver_OnTrigger_AoO_Patch
+    {
+        internal static bool AttackerTriggeredAttackOfOpportunity = false;
+
+        [Harmony12.HarmonyPrefix]
+        static bool Prefix(RuleCombatManeuver __instance)
+        {
+            if (AttackerTriggeredAttackOfOpportunity)
+            {
+                Main.Logger?.Write("Combat Maneuver triggered AoO");
+                __instance.Target.CombatState.AttackOfOpportunity(__instance.Initiator);
+            }
+            return true;
+        }
+
+        [Harmony12.HarmonyPostfix]
+        static void Postfix()
+        {
+            AttackerTriggeredAttackOfOpportunity = false;
         }
     }
 }

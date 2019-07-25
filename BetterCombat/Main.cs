@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using BetterCombat.Patches.Vanilla;
 using Kingmaker.Blueprints;
+using BetterCombat.Patches.Vanilla.CombatManeuvers;
 
 namespace BetterCombat
 {
@@ -50,8 +51,10 @@ namespace BetterCombat
                 Logger.Append("Combat Maneuver patches: OK");
             }
 
-            HarmonyPatcher.ApplyPatch(typeof(UnitCommands_InterruptAll_Patch), "Interrupt all patch");
-            HarmonyPatcher.ApplyPatch(typeof(UnitProneController_Tick_Patch), "Prone controller patch");
+            //HarmonyPatcher.ApplyPatch(typeof(UnitCommands_InterruptAll_Patch), "Interrupt all patch");
+            //HarmonyPatcher.ApplyPatch(typeof(UnitProneController_Tick_Patch), "Prone controller patch");
+            HarmonyPatcher.ApplyPatch(typeof(UnitCombatState_AttackOfOpportunity_Patch), "AoO Hard Patch");
+            HarmonyPatcher.ApplyPatch(typeof(RuleCombatManeuver_OnTrigger_AoO_Patch), "AoO Combat Maneuver fix");
 
             Logger.Flush();
 

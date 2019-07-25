@@ -3,10 +3,13 @@ using BetterCombat.Patches.Vanilla.CombatManeuvers;
 using Kingmaker;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
+using Kingmaker.Controllers.Combat;
 using Kingmaker.Controllers.Units;
 using Kingmaker.EntitySystem.Entities;
+using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Localization;
 using Kingmaker.Localization.Shared;
+using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
@@ -14,6 +17,7 @@ using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.UnitLogic.Commands;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.FactLogic;
+using Kingmaker.UnitLogic.Parts;
 using Kingmaker.Utility;
 using System;
 using System.Collections.Generic;
@@ -106,49 +110,52 @@ namespace BetterCombat.Patches.Vanilla
         }
     }
 
-    [Harmony12.HarmonyPatch(typeof(UnitCommands), nameof(UnitCommands.InterruptAll), new Type[] { })]
-    class UnitCommands_InterruptAll_Patch
+    [Harmony12.HarmonyPatch(typeof(UnitCombatState), nameof(UnitCombatState.AttackOfOpportunity), new Type[] { typeof(UnitEntityData)})]
+    class UnitCombatState_AttackOfOpportunity_Patch
     {
-        internal static Stack<Func<UnitCommand, bool>> predicates = new Stack<Func<UnitCommand, bool>>();
-
-        public static void PushInterruptAllCommandsPredicate(Func<UnitCommand, bool> predicate)
-        {
-            predicates.Push(predicate);
-        }
-
-
         [Harmony12.HarmonyPrefix]
-        static bool Prefix(UnitCommands __instance)
+        static bool Prefix(UnitCombatState __instance, UnitEntityData target, ref bool __result)
         {
-            Main.Logger?.Write("Prefix InterruptAll");
-            if (predicates.Count > 0)
-            {
-                Main.Logger?.Write("Redirecting to InterruptAll(predicate)");
-                var predicate = predicates.Pop();
-                __instance.InterruptAll(predicate);
+            __result = false;
+            if (__instance.PreventAttacksOfOpporunityNextFrame || target.CombatState.PreventAttacksOfOpporunityNextFrame || !__instance.CanActInCombat && !__instance.Unit.Descriptor.State.HasCondition(UnitCondition.AttackOfOpportunityBeforeInitiative) || (!__instance.CanAttackOfOpportunity || !__instance.Unit.Descriptor.State.CanAct))
                 return false;
+            UnitPartForceMove unitPartForceMove = target.Get<UnitPartForceMove>();
+            if (unitPartForceMove && !unitPartForceMove.ProvokeAttackOfOpportunity || (UnitCommand.CommandTargetUntargetable(__instance.Unit, target, null) || __instance.Unit.HasMotionThisTick) || (__instance.Unit.GetThreatHand() == null || __instance.AttackOfOpportunityCount <= 0 || (!target.Memory.Contains(__instance.Unit) || target.Descriptor.State.HasCondition(UnitCondition.ImmuneToAttackOfOpportunity))))
+                return false;
+            if (target.Descriptor.State.HasCondition(UnitCondition.UseMobilityToNegateAttackOfOpportunity))
+            {
+                RuleCalculateCMD ruleCalculateCmd = Rulebook.Trigger(new RuleCalculateCMD(target, __instance.Unit, CombatManeuver.None));
+                if (Rulebook.Trigger(new RuleSkillCheck(target, StatType.SkillMobility, ruleCalculateCmd.Result)).IsPassed)
+                    return false;
             }
-            return true;
+
+            // Changed code: instantly trigger AoO check (from UnitAttackOfOpportunity.OnAction)
+            //  === Original Start ===
+            //  __instance.Unit.Commands.Run((UnitCommand) new UnitAttackOfOpportunity(target));
+            //  EventBus.RaiseEvent<IAttackOfOpportunityHandler>((Action<IAttackOfOpportunityHandler>)(h => h.HandleAttackOfOpportunity(__instance.Unit, target)));
+            //  === Original End   ===
+            RuleAttackWithWeapon aoo = new RuleAttackWithWeapon(__instance.Unit, target, __instance.Unit.GetThreatHand().Weapon, 0)
+            {
+                IsAttackOfOpportunity = true
+            };
+            if (!target.Descriptor.State.IsDead)
+            {
+                EventBus.RaiseEvent<IAttackOfOpportunityHandler>(h => h.HandleAttackOfOpportunity(__instance.Unit, target));
+                Rulebook.Trigger(aoo);
+            }
+            // End changed code
+
+            if (__instance.AttackOfOpportunityCount == __instance.AttackOfOpportunityPerRound)
+                __instance.Cooldown.AttackOfOpportunity = 5.4f;
+            --__instance.AttackOfOpportunityCount;
+
+            // Added code from UnitAttack.TriggerAttackRule
+            if (target.View != null && target.View.HitFxManager != null)
+                target.View.HitFxManager.HandleAttackHit(aoo);
+            // End added code from UnitAttack.TriggerAttackRule
+
+            __result = true;
+            return false;
         }
     }
-
-    [Harmony12.HarmonyPatch(typeof(UnitProneController), nameof(UnitProneController.Tick), new Type[] { typeof(UnitEntityData) })]
-    class UnitProneController_Tick_Patch
-    {
-        [Harmony12.HarmonyPrefix]
-        static bool Prefix(UnitEntityData unit)
-        {
-            Main.Logger?.Write("Pushing parameters");
-            UnitCommands_InterruptAll_Patch.PushInterruptAllCommandsPredicate((cmd) => !cmd.IsFinished && !(cmd is UnitAttackOfOpportunity));
-            return true;
-        }
-
-        [Harmony12.HarmonyPostfix]
-        static void Postfix(UnitEntityData unit)
-        {
-            Main.Logger?.Write("Clearing parameters");
-            UnitCommands_InterruptAll_Patch.predicates.Clear();
-        }
-    }
-
 }

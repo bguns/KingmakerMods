@@ -32,7 +32,9 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
         {
             if (evt.Type == ManeuverType && !evt.Initiator.Descriptor.HasFact(ImprovedManeuverFact))
             {
-                RuleCombatManeuver_OnTrigger_AoO_Patch.AttackerTriggeredAttackOfOpportunity = true;
+                Main.Logger?.Write("Combat Maneuver AoO triggered");
+                //RuleCombatManeuver_OnTrigger_AoO_Patch.AttackerTriggeredAttackOfOpportunity = true;
+                evt.Target.CombatState.AttackOfOpportunity(evt.Initiator);
             }
         }
 

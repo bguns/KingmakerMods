@@ -29,5 +29,12 @@ namespace BetterCombat.Helpers
             LocalizationManager.CurrentPack.Strings[key] = value;
             return true;
         }
+
+        internal static bool AddStringToLocalizationPack(string key, string value, LocalizationPack pack)
+        {
+            if (key == null || value == null)
+                return false;
+            return value.Equals(pack.Strings.PutIfAbsent(key, value));
+        }
     }
 }

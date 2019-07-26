@@ -42,6 +42,8 @@ namespace BetterCombat.Patches.Vanilla.AttackOfOpportunity
     // and possible damage info (and a little screenshake on hit).
     //
     // It is *mildly* confusing in hectic real-time battles, but then again, what isn't. Pathfinder is a turn-based game.
+
+
     [Harmony12.HarmonyPatch(typeof(UnitCombatState), nameof(UnitCombatState.AttackOfOpportunity), new Type[] { typeof(UnitEntityData) })]
     class UnitCombatState_AttackOfOpportunity_Patch
     {

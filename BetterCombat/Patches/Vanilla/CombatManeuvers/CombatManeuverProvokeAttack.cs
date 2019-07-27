@@ -14,38 +14,32 @@ using System.Threading.Tasks;
 
 namespace BetterCombat.Patches.Vanilla.CombatManeuvers
 {
-    [AllowedOn(typeof(BlueprintUnitFact))]
-    [AllowMultipleComponents]
-    public class ImprovedCombatManeuverDoNotProvokeAttack : RuleInitiatorLogicComponent<RuleCombatManeuver>
+    
+    // Two ways of going about (not) triggering AoO on a combat maneuver:
+    //
+    // 1) Add a fact to each combat maneuver action and force an AoO in its OnEventAboutToTrigger call unless the initiator has
+    //      something which prevents this (e.g. the Improved combat maneuver feats).
+    // 2) Patch the OnTrigger call for RuleCombatManeuver to always provoke an AoO unless some value is set to false. Add a fact
+    //      to each improved combat maneuver feat which sets this value to false for the next combat maneuver.
+    //
+    // Option 1 uses less patches (initially). However, option 1 is not really compatible with an exception-based ruleset:
+    // the *default* in pathfinder is that combat maneuvers provoke an AoO, and the exception created by e.g. the Improved
+    // Combat Maneuver feats, is that they don't. Therefore the correct action is to patch the actual RuleCombatManeuver rule,
+    // and add the necessary exceptions by way of extra components on the Improved combat maneuver feats.
+    //
+    // So, going with option 2, this file patches RuleCombatManeuver.OnTrigger
+    static class CombatManeuverProvokeAttack
     {
-        public CombatManeuver ManeuverType;
-
-        public static ImprovedCombatManeuverDoNotProvokeAttack Create(CombatManeuver maneuverType)
+        public static void DoNotTriggerAoOForNextCombatManeuver(UnitEntityData unit)
         {
-            var instance = Helpers.Library.Create<ImprovedCombatManeuverDoNotProvokeAttack>();
-            instance.ManeuverType = maneuverType;
-            //instance.ImprovedManeuverFact = improvedManeuverFact;
-            return instance;
-        }
-
-        public override void OnEventAboutToTrigger(RuleCombatManeuver evt)
-        {
-            if (evt.Type == ManeuverType)
-            {
-                Main.Logger?.Write("Combat Maneuver will not trigger AoO");
-                RuleCombatManeuver_OnTrigger_ProvokeAoO_Patch.DoNotTriggerAoOForNextCombatManeuver(evt.Initiator);
-            }
-        }
-
-        public override void OnEventDidTrigger(RuleCombatManeuver evt)
-        {
+            RuleCombatManeuver_OnTrigger_ProvokeAoO_Patch.provokeAoOOnCombatManeuverAttempt[unit.UniqueId] = false;
         }
     }
 
     [Harmony12.HarmonyPatch(typeof(RuleCombatManeuver), nameof(RuleCombatManeuver.OnTrigger), Harmony12.MethodType.Normal)]
     class RuleCombatManeuver_OnTrigger_ProvokeAoO_Patch
     { 
-        private static Dictionary<string, bool> provokeAoOOnCombatManeuverAttempt = new Dictionary<string, bool>();
+        internal static Dictionary<string, bool> provokeAoOOnCombatManeuverAttempt = new Dictionary<string, bool>();
 
         [Harmony12.HarmonyPrefix]
         static bool Prefix(RuleCombatManeuver __instance, RulebookEventContext context)
@@ -64,20 +58,6 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
             provokeAoOOnCombatManeuverAttempt[__instance.Initiator.UniqueId] = true;
         }
 
-        public static void DoNotTriggerAoOForNextCombatManeuver(UnitEntityData unit)
-        {
-            provokeAoOOnCombatManeuverAttempt[unit.UniqueId] = false;
-        }
-    }
-
-    [Harmony12.HarmonyPatch(typeof(ManeuverOnAttack), nameof(ManeuverOnAttack.OnEventDidTrigger), Harmony12.MethodType.Normal)]
-    class ManeuverOnAttack_OnEventDidTrigger_NoAoO_Patch
-    {
-        [Harmony12.HarmonyPrefix]
-        static bool Prefix(ManeuverOnAttack __instance, RuleAttackWithWeapon evt)
-        {
-            RuleCombatManeuver_OnTrigger_ProvokeAoO_Patch.DoNotTriggerAoOForNextCombatManeuver(evt.Initiator);
-            return true;
-        }
+        
     }
 }

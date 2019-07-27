@@ -46,19 +46,16 @@ namespace BetterCombat
                 Logger.Append("Flanking patches: OK");
             }
 
-            if (HarmonyPatcher.ApplyPatch(typeof(UnitDescriptor_AddCombatManeuverActionsOnInitialize_Patch), "Combat Maneuver patches") 
-                && HarmonyPatcher.ApplyPatch(typeof(RuleCombatManeuver_OnTrigger_ProvokeAoO_Patch), "Combat Maneuver patches")
-                && HarmonyPatcher.ApplyPatch(typeof(ManeuverOnAttack_OnEventDidTrigger_NoAoO_Patch), "Combat Maneuver patches")
-                && HarmonyPatcher.ApplyPatch(typeof(Library_ModifyCombatManeuverFeats_Patch), "Combat Maneuver patches")
-                && HarmonyPatcher.ApplyPatch(typeof(LocalizationManager_FixCombatManeuverFeatText_Patch), "Combat Maneuver text fix")) {
+            if (HarmonyPatcher.ApplyPatch(typeof(UnitCombatState_AttackOfOpportunity_Patch), "AoO Hard Patch"))
+            {
+                Logger.Append("Instant AoO patch: OK");
+            }
+
+            if (HarmonyPatcher.ApplyPatches(CombatManeuverPatches.AllPatches, "Combat maneuver patches"))
+            {
                 Logger.Append("Combat Maneuver patches: OK");
             }
 
-            //HarmonyPatcher.ApplyPatch(typeof(UnitCommands_InterruptAll_Patch), "Interrupt all patch");
-            //HarmonyPatcher.ApplyPatch(typeof(UnitProneController_Tick_Patch), "Prone controller patch");
-            HarmonyPatcher.ApplyPatch(typeof(UnitCombatState_AttackOfOpportunity_Patch), "AoO Hard Patch");
-            //HarmonyPatcher.ApplyPatch(typeof(RuleCombatManeuver_OnTrigger_AoO_Patch), "AoO Combat Maneuver fix");
-            //HarmonyPatcher.ApplyPatch(typeof(LocalizedString_LoadString_Patch), "LocalizedString unity bug fix");
 
             Logger.Flush();
 

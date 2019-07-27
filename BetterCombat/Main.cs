@@ -47,6 +47,8 @@ namespace BetterCombat
             }
 
             if (HarmonyPatcher.ApplyPatch(typeof(UnitDescriptor_AddCombatManeuverActionsOnInitialize_Patch), "Combat Maneuver patches") 
+                && HarmonyPatcher.ApplyPatch(typeof(RuleCombatManeuver_OnTrigger_ProvokeAoO_Patch), "Combat Maneuver patches")
+                && HarmonyPatcher.ApplyPatch(typeof(ManeuverOnAttack_OnEventDidTrigger_NoAoO_Patch), "Combat Maneuver patches")
                 && HarmonyPatcher.ApplyPatch(typeof(Library_ModifyCombatManeuverFeats_Patch), "Combat Maneuver patches")
                 && HarmonyPatcher.ApplyPatch(typeof(LocalizationManager_FixCombatManeuverFeatText_Patch), "Combat Maneuver text fix")) {
                 Logger.Append("Combat Maneuver patches: OK");

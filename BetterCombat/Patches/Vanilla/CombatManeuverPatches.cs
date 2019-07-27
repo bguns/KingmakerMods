@@ -147,20 +147,14 @@ namespace BetterCombat.Patches.Vanilla
                     var improvedCombatManeuverFeat = library.Get<BlueprintFeature>(combatManeuverFeatIds[combatManeuver]);
                     improvedCombatManeuverFeat.RemoveComponent(improvedCombatManeuverFeat.GetComponent<AddFacts>());
                     improvedCombatManeuverFeat.SetName(Localization.CreateString(newImprovedCombatManeuverFeatNameKeys[combatManeuver], newImprovedCombatManeuverFeatNames[newImprovedCombatManeuverFeatNameKeys[combatManeuver]]));
-
-                    var combatManeuverAction = library.Get<BlueprintAbility>(combatManeuverActionIds[combatManeuver]);
-                    combatManeuverAction.AddComponent(CombatManeuverProvokeAttack.Create(combatManeuver, improvedCombatManeuverFeat));
+                    improvedCombatManeuverFeat.AddComponent(ImprovedCombatManeuverDoNotProvokeAttack.Create(combatManeuver));
                 }
             }
 
             Main.Logger?.Write("Updating actions for Dirty Trick");
             var improvedDirtyTrickFeat = library.Get<BlueprintFeature>(combatManeuverFeatIds[CombatManeuver.DirtyTrickBlind]);
-
-            var dirtyTrickEntangleAction = library.Get<BlueprintAbility>(combatManeuverActionIds[CombatManeuver.DirtyTrickEntangle]);
-            dirtyTrickEntangleAction.AddComponent(CombatManeuverProvokeAttack.Create(CombatManeuver.DirtyTrickEntangle, improvedDirtyTrickFeat));
-
-            var dirtyTrickSicknessAction = library.Get<BlueprintAbility>(combatManeuverActionIds[CombatManeuver.DirtyTrickSickened]);
-            dirtyTrickSicknessAction.AddComponent(CombatManeuverProvokeAttack.Create(CombatManeuver.DirtyTrickSickened, improvedDirtyTrickFeat));
+            improvedDirtyTrickFeat.AddComponent(ImprovedCombatManeuverDoNotProvokeAttack.Create(CombatManeuver.DirtyTrickEntangle));
+            improvedDirtyTrickFeat.AddComponent(ImprovedCombatManeuverDoNotProvokeAttack.Create(CombatManeuver.DirtyTrickSickened));
         }
     }
 

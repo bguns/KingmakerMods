@@ -29,10 +29,10 @@ namespace BetterCombat.Patches.Vanilla.Flanking
     // things that deal with the flanking rules (Outflank, Mad Dog's Pack Tactics, ...).
     // 
     // Other times the patched method will end up doing unnecessary work. Precise Strike, for example, can be fixed by putting the
-    // required flanking parameters on the custom stack (the attacker, and a function that checks Solo Tacics, or whether both 
+    // required flanking parameters on the custom stack (the attacker, and a function that checks for Solo Tacics, or whether both 
     // flanking partners have Precise Strike). So the IsFlanked call will test all the necessary preconditions for Precise Strike
     // to work. However, the vanilla Precise Strike logic will then go on to check for Solo Tactics/Precise Strike in units engaged
-    // to the target. This is unnecessary (flanking requires engagement anyway), however since it doesn not result in wrong results,
+    // to the target. This is unnecessary (flanking requires engagement anyway), however since it does not result in wrong results,
     // I still keep Precise Strike as is, so other mods could potentially still patch it without much compatability problems.
     //
     // However, the most important part of doing things this way is still to not break RuleAttackRoll and RuleCalculateAttackBonus.

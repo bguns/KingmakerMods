@@ -70,7 +70,7 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
         }
     }
 
-    [Harmony12.HarmonyPatch(typeof(ManeuverOnAttack), nameof(ManeuverOnAttack.OnEventAboutToTrigger), Harmony12.MethodType.Normal)]
+    [Harmony12.HarmonyPatch(typeof(ManeuverOnAttack), nameof(ManeuverOnAttack.OnEventDidTrigger), Harmony12.MethodType.Normal)]
     class ManeuverOnAttack_OnEventDidTrigger_NoAoO_Patch
     {
         [Harmony12.HarmonyPrefix]

@@ -1,4 +1,5 @@
-﻿using Kingmaker.Localization;
+﻿using Kingmaker.Blueprints.Facts;
+using Kingmaker.Localization;
 using Kingmaker.Localization.Shared;
 using System;
 using System.Collections.Generic;
@@ -10,23 +11,17 @@ namespace BetterCombat.Helpers
 {
     static class Localization
     {
-        internal static bool ChangeStringForLocale(string key, string value, Locale locale)
+        internal static bool ChangeStringForLocalizationPack(string key, string value, LocalizationPack pack)
         {
-            if (!LocalizationManager.CurrentLocale.Equals(locale))
-            {
-                Main.Logger?.Write($"ChangeStringForLocale: current locale is not {locale.ToString()}");
-                return false;
-            }
-
             string text;
-            LocalizationManager.CurrentPack.Strings.TryGetValue(key, out text);
+            pack.Strings.TryGetValue(key, out text);
             if (text == null)
             {
-                Main.Logger?.Error($"ChangeStringForLocale: text for key {key} not found.");
+                Main.Logger?.Error($"Localization.ChangeStringForLocalizationPack: text for key `{key}` not found.");
                 return false;
             }
 
-            LocalizationManager.CurrentPack.Strings[key] = value;
+            pack.Strings[key] = value;
             return true;
         }
 
@@ -36,5 +31,43 @@ namespace BetterCombat.Helpers
                 return false;
             return value.Equals(pack.Strings.PutIfAbsent(key, value));
         }
+
+        internal static LocalizedString CreateString(string key, string value)
+        {
+            // Sanity checks
+            var strings = LocalizationManager.CurrentPack.Strings;
+            String oldValue;
+            if (!strings.TryGetValue(key, out oldValue)) 
+                Main.Logger?.Write($"Localization.CreateString: localization key `{key}` not present in current pack.");
+            if (value != oldValue)
+                Main.Logger?.Write($"Localization.CreateString: current pack already has a different value for key `{key}`: `{oldValue}`");
+
+            var localized = new LocalizedString();
+            localizedString_m_Key(localized, key);
+            return localized;
+        }
+
+        static FastSetter localizedString_m_Key = Harmony.CreateFieldSetter<LocalizedString>("m_Key");
+
+        #region Extension methods
+
+        static readonly FastSetter blueprintUnitFact_set_Description = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_Description");
+        static readonly FastSetter blueprintUnitFact_set_Icon = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_Icon");
+        static readonly FastSetter blueprintUnitFact_set_DisplayName = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_DisplayName");
+        static readonly FastGetter blueprintUnitFact_get_Description = Harmony.CreateFieldGetter<BlueprintUnitFact>("m_Description");
+        static readonly FastGetter blueprintUnitFact_get_DisplayName = Harmony.CreateFieldGetter<BlueprintUnitFact>("m_DisplayName");
+
+        public static LocalizedString GetName(this BlueprintUnitFact fact) => (LocalizedString)blueprintUnitFact_get_DisplayName(fact);
+
+        public static void SetName(this BlueprintUnitFact fact, LocalizedString name)
+        {
+            blueprintUnitFact_set_DisplayName(fact, name);
+        }
+
+        public static LocalizedString GetDescription(this BlueprintUnitFact fact) => (LocalizedString)blueprintUnitFact_get_Description(fact);
+
+
+
+        #endregion
     }
 }

@@ -70,6 +70,46 @@ namespace BetterCombat.Patches.Vanilla
             { newImprovedCombatManeuverFeatNameKeys[CombatManeuver.SunderArmor], "Improved Sunder Armor" }
         };
 
+        static readonly Dictionary<CombatManeuver, string> updatedImprovedCombatManeuverFeatDescriptionKeys = new Dictionary<CombatManeuver, string>
+        {
+            { CombatManeuver.Trip, "294cdc6a-8d05-4977-b7ff-a1ac1d9a56be" }, // Improved Trip
+            { CombatManeuver.BullRush, "d8ca5ba2-7c38-49ad-afc7-26899432c9aa" }, // Improved Bull Rush
+            { CombatManeuver.DirtyTrickBlind, "f74caddc-78f8-468e-8af6-371f8ab3b377" }, // Improved Dirty Trick
+            { CombatManeuver.Disarm, "13d9f747-9c43-49e1-a50d-fed7695e8581" }, // Improved Disarm
+            { CombatManeuver.SunderArmor, "f5cda27a-2587-4978-bdba-74bb2beabe89" }, // Improved Sunder Armor
+        };
+
+        static readonly Dictionary<string, string> updatedImprovedCombatManeuverFeatDescriptions = new Dictionary<string, string>
+        {
+            { updatedImprovedCombatManeuverFeatDescriptionKeys[CombatManeuver.Trip], "You do not provoke an attack of opportunity when performing a trip combat maneuver. In addition, you receive a +2 bonus on checks made to trip a foe. You also receive a +2 bonus to your Combat Maneuver Defense whenever an opponent tries to trip you." },
+            { updatedImprovedCombatManeuverFeatDescriptionKeys[CombatManeuver.BullRush], "You do not provoke an attack of opportunity when performing a bull rush combat maneuver. In addition, you receive a +2 bonus on checks made to bull rush a foe. You also receive a +2 bonus to your Combat Maneuver Defense whenever an opponent tries to bull rush you." },
+            { updatedImprovedCombatManeuverFeatDescriptionKeys[CombatManeuver.DirtyTrickBlind], "You do not provoke an attack of opportunity when performing a dirty trick combat maneuver. In addition, you receive a +2 bonus on checks made to attempt a dirty trick. You also receive a +2 bonus to your Combat Maneuver Defense whenever an opponent tries a dirty trick on you." },
+            { updatedImprovedCombatManeuverFeatDescriptionKeys[CombatManeuver.Disarm], "You do not provoke an attack of opportunity when performing a disarm combat maneuver. In addition, you receive a +2 bonus on checks made to disarm a foe. You also receive a +2 bonus to your Combat Maneuver Defense whenever an opponent tries to disarm you." },
+            { updatedImprovedCombatManeuverFeatDescriptionKeys[CombatManeuver.SunderArmor], "You do not provoke an attack of opportunity when performing a sunder armor combat maneuver. In addition, you receive a +2 bonus on checks made to sunder the armor of a foe. You also receive a +2 bonus to your Combat Maneuver Defense whenever an opponent tries to sunder your armor." }
+        };
+
+        static readonly Dictionary<CombatManeuver, string> updatedCombatManeuverActionDescriptionKeys = new Dictionary<CombatManeuver, string>
+        {
+            { CombatManeuver.Trip, "882f2dbb-e005-4b83-bbe0-83aa3230e932" }, // Trip
+            { CombatManeuver.BullRush, "0f9dde7c-42a4-4779-ae83-ac3ff7979f0f" }, // Bull Rush
+            { CombatManeuver.DirtyTrickBlind, "0986ab45-3f84-4540-8b5e-ad6e6ab04942" }, // Dirty Trick - Blindness
+            { CombatManeuver.DirtyTrickEntangle, "66cdeddf-e956-4d8c-9eba-d1b7c4616148" }, // Dirty Trick - Entangle
+            { CombatManeuver.DirtyTrickSickened, "763ccc85-1cf0-4a83-a9c5-00d8cc85fced" }, // Dirty Trick - Sickened
+            { CombatManeuver.Disarm,  "981b15a4-a022-4525-a1bb-a2d2a3e42ce4" }, // Disarm
+            { CombatManeuver.SunderArmor, "93591497-f353-4f87-b80b-01d6efcf8b99" }  // Sunder
+        };
+
+        static readonly Dictionary<string, string> updatedCombatManeuverActionDescriptions = new Dictionary<string, string>
+        {
+            { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.Trip],  "You can attempt to trip your opponent in place of a melee attack. If you do not have the Improved Trip feat, or a similar ability, initiating a trip provokes an attack of opportunity from the target of your maneuver.\nIf your combat maneuver is successful, the target is knocked prone.\nIf the target has more than two legs, add +2 to the DC of the combat maneuver attack roll for each additional leg it has. Some creatures—such as oozes, creatures without legs, and flying creatures—cannot be tripped."},
+            { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.BullRush], "A bull rush attempts to push an opponent straight back without doing any harm. If you do not have the Improved Bull Rush feat, or a similar ability, initiating a bull rush provokes an attack of opportunity from the target of your maneuver.\nIf your combat maneuver is successful, your target is pushed back 5 feet. For every 5 by which your attack exceeds your opponent's CMD, you can push the target back an additional 5 feet.\nAn enemy being moved by a bull rush does not provoke an attack of opportunity because of the movement unless you possess the Greater Bull Rush feat. You cannot bull rush a creature into a square that is occupied by a solid object or obstacle." },
+            { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.DirtyTrickBlind], "You can attempt to hinder a foe in melee as a standard action. If you do not have the Improved Dirty Trick feat or a similar ability, attempting a dirty trick provokes an attack of opportunity from the target of your maneuver.\nIf your attack is successful, the target is blinded.\nThis condition lasts for 1 round. For every 5 by which your attack exceeds your opponent's CMD, the penalty lasts 1 additional round." },
+            { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.DirtyTrickEntangle], "You can attempt to hinder a foe in melee as a standard action. If you do not have the Improved Dirty Trick feat or a similar ability, attempting a dirty trick provokes an attack of opportunity from the target of your maneuver.\nIf your attack is successful, the target is entangled.\nThis condition lasts for 1 round. For every 5 by which your attack exceeds your opponent's CMD, the penalty lasts 1 additional round." },
+            { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.DirtyTrickSickened], "You can attempt to hinder a foe in melee as a standard action. If you do not have the Improved Dirty Trick feat or a similar ability, attempting a dirty trick provokes an attack of opportunity from the target of your maneuver.\nIf your attack is successful, the target is sickened.\nThis condition lasts for 1 round. For every 5 by which your attack exceeds your opponent's CMD, the penalty lasts 1 additional round." },
+            { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.Disarm], "You can attempt to disarm a foe in melee as a standard action.  If you do not have the Improved Disarm feat, or a similar ability, attempting to disarm a foe provokes an attack of opportunity from the target of your maneuver.\nIf your combat maneuver is successful, the target cannot use his weapons for 1 round.\nFor every 5 by which your attack exceeds your opponent's CMD, the disarmed condition lasts 1 additional round." },
+            { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.SunderArmor], "You can attempt to dislodge a piece of armor worn by your opponent. If you do not have the Improved Sunder feat, or a similar ability, attempting to sunder armor provokes an attack of opportunity from the target of your maneuver.\nIf your combat maneuver is successful, the target loses its bonuses from armor for 1 round.\nFor every 5 by which your attack exceeds your opponent's CMD, the penalty lasts 1 additional round." }
+        };
+
         
         internal static void AddCombatManeuverActionsToUnit(UnitDescriptor unit)
         {
@@ -81,22 +121,20 @@ namespace BetterCombat.Patches.Vanilla
             });
         }
 
-        /*internal static void RemoveAddedActionsFromCombatManeuverFeats()
-        {
-            foreach (var combatManeuverFeatId in combatManeuverFeatIds)
-            {
-                var feat = library.Get<BlueprintFeature>(combatManeuverFeatId);
-                if (feat != null)
-                    feat.RemoveComponent(feat.GetComponent<AddFacts>());
-            }
-        }*/
-
-        internal static void FixImprovedCombatManeuverLocalizationText(LocalizationPack pack)
+        internal static void AddImprovedCombatManeuverLocalizedNames(LocalizationPack pack)
         {
             newImprovedCombatManeuverFeatNames.ForEach((key, value) => Localization.AddStringToLocalizationPack(key, value, pack));
         }
 
-        static FastSetter blueprintFact_set_name = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_DisplayName");
+        internal static void ChangeImprovedCombatManeuverFeatDescriptions(LocalizationPack pack)
+        {
+            updatedImprovedCombatManeuverFeatDescriptions.ForEach((key, value) => Localization.ChangeStringForLocalizationPack(key, value, pack));
+        }
+
+        internal static void ChangeCombatManeuverActionDescriptions(LocalizationPack pack)
+        {
+            updatedCombatManeuverActionDescriptions.ForEach((key, value) => Localization.ChangeStringForLocalizationPack(key, value, pack));
+        }
 
         internal static void FixCombatManeuverFeats()
         {
@@ -108,7 +146,7 @@ namespace BetterCombat.Patches.Vanilla
                     Main.Logger?.Write($"Updating feats for {Enum.GetName(typeof(CombatManeuver), combatManeuver)}");
                     var improvedCombatManeuverFeat = library.Get<BlueprintFeature>(combatManeuverFeatIds[combatManeuver]);
                     improvedCombatManeuverFeat.RemoveComponent(improvedCombatManeuverFeat.GetComponent<AddFacts>());
-                    blueprintFact_set_name(improvedCombatManeuverFeat as BlueprintUnitFact, newImprovedCombatManeuverFeatNameKeys[combatManeuver]);
+                    improvedCombatManeuverFeat.SetName(Localization.CreateString(newImprovedCombatManeuverFeatNameKeys[combatManeuver], newImprovedCombatManeuverFeatNames[newImprovedCombatManeuverFeatNameKeys[combatManeuver]]));
 
                     var combatManeuverAction = library.Get<BlueprintAbility>(combatManeuverActionIds[combatManeuver]);
                     combatManeuverAction.AddComponent(CombatManeuverProvokeAttack.Create(combatManeuver, improvedCombatManeuverFeat));
@@ -134,9 +172,6 @@ namespace BetterCombat.Patches.Vanilla
         static void Postfix(UnitDescriptor __instance)
         {
             CombatManeuverPatches.AddCombatManeuverActionsToUnit(__instance);
-            /*var tripAction = Main.Library.Get<BlueprintAbility>("6fd05c4ecfebd6f4d873325de442fc17");
-            var improvedTripFeat = Main.Library.Get<BlueprintFeature>("0f15c6f70d8fb2b49aa6cc24239cc5fa");
-            tripAction.AddComponent(CombatManeuverProvokeAttack.Create(CombatManeuver.Trip, improvedTripFeat));*/
         }
     }
 
@@ -156,54 +191,13 @@ namespace BetterCombat.Patches.Vanilla
         [Harmony12.HarmonyPostfix]
         static void Postfix(Locale locale, ref LocalizationPack __result)
         {
-            /*Localization.ChangeStringForLocale("9283fcc1-ba37-4711-93ac-6de17415e10f", "Improved Trip", Locale.enGB);
-            Localization.ChangeStringForLocale("be940667-072a-4835-8122-8f32a8337e27", "Improved Bull Rush", Locale.enGB);
-            Localization.ChangeStringForLocale("a7d3be4d-18ee-4f8c-a540-c3940b2274e9", "Improved Dirty Trick", Locale.enGB);
-            Localization.ChangeStringForLocale("d7f35120-78b5-4656-b045-17b9b6b3635c", "Improved Disarm", Locale.enGB);
-            Localization.ChangeStringForLocale("fd428ed5-beb2-4986-832b-5193f7424f9f", "Improved Sunder Armor", Locale.enGB);*/
-
-            if (locale != null && locale.Equals(Locale.enGB))
+            if (Locale.enGB.Equals(locale))
             {
-                CombatManeuverPatches.FixImprovedCombatManeuverLocalizationText(__result);
+                CombatManeuverPatches.AddImprovedCombatManeuverLocalizedNames(__result);
+                CombatManeuverPatches.ChangeImprovedCombatManeuverFeatDescriptions(__result);
+                CombatManeuverPatches.ChangeCombatManeuverActionDescriptions(__result);
             }
             
-        }
-    }
-
-    [Harmony12.HarmonyPatch(typeof(LocalizedString), "LoadString", new Type[] { typeof(LocalizationPack), typeof(Locale)})]
-    class LocalizedString_LoadString_Patch
-    {
-        static FastGetter get_localizedString_mKey = Harmony.CreateFieldGetter(typeof(LocalizedString), "m_Key");
-
-        [Harmony12.HarmonyPrefix]
-        static bool Prefix(LocalizedString __instance, LocalizationPack pack, Locale locale, ref string __result)
-        {
-            Main.Logger?.Write("LocalizedString.LoadString");
-            object keyObj = get_localizedString_mKey(__instance);
-            Main.Logger?.Write("LocalizedString keyObj gotten");
-            if (pack == null || (object)keyObj == (object)null)
-            {
-                __result = string.Empty;
-                return false;
-            }
-            Main.Logger?.Write("keyobj != null");
-            string key = (string)keyObj;
-            Main.Logger?.Write("keyObj casted to string");
-            if ((bool)__instance.Shared)
-            {
-                Main.Logger?.Write("(bool)__instance.Shared == true");
-                LocalizedString localizedString = __instance;
-                for (int index = 0; (bool)localizedString.Shared && index < 50; localizedString = localizedString.Shared.String)
-                    ++index;
-                key = (string)get_localizedString_mKey(localizedString);
-            }
-            if (key != string.Empty)
-            {
-                __result = pack.GetText(key, true);
-                return false;
-            }
-            __result = string.Empty;
-            return false;
         }
     }
 }

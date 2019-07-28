@@ -7,6 +7,7 @@ using BetterCombat.Patches.Vanilla;
 using Kingmaker.Blueprints;
 using BetterCombat.Patches.Vanilla.CombatManeuvers;
 using BetterCombat.Patches.Vanilla.AttackOfOpportunity;
+using BetterCombat.Patches.Vanilla.SoftCover;
 
 namespace BetterCombat
 {
@@ -54,6 +55,13 @@ namespace BetterCombat
             if (HarmonyPatcher.ApplyPatches(CombatManeuverPatches.AllPatches, "Combat maneuver patches"))
             {
                 Logger.Append("Combat Maneuver patches: OK");
+            }
+
+            HarmonyPatcher.ApplyPatch(typeof(LocalizationManager_AddSoftCoverLocalization_Patch), "Soft cover localization");
+
+            if (HarmonyPatcher.ApplyPatch(typeof(RuleCalculateAC_SoftCover_Patch), "Soft cover patch"))
+            {
+                Logger.Append("Soft cover patch: OK");
             }
 
 

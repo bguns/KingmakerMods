@@ -11,16 +11,16 @@ namespace BetterCombat.Helpers
 {
     public static class VectorMath
     {
-        public static float AngleBetweenUnits(UnitEntityData cornerUnit, UnitEntityData unit1, UnitEntityData unit2)
+        public static float AngleBetweenPoints(Vector2 corner, Vector2 point1, Vector2 point2)
         {
 
-            if (cornerUnit == null || unit1 == null || unit2 == null || cornerUnit == unit1 || cornerUnit == unit2 || unit1 == unit2)
+            if (corner == null || point1 == null || point2 == null || corner == point1 || corner == point2 || point1 == point2)
                 return 0.0f;
 
-            var position1 = unit1.Position - cornerUnit.Position;
-            var position2 = unit2.Position - cornerUnit.Position;
+            var position1 = point1 - corner;
+            var position2 = point2 - corner;
 
-            return Vector2.Angle(position1.To2D(), position2.To2D());
+            return Vector2.Angle(position1, position2);
         }
 
         // Taken from:

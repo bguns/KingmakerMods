@@ -72,7 +72,7 @@ namespace BetterCombat.Rules
             // Ideally, the flanking partners should be more than 120 degrees from each other with respect to the target.
             // However, I found that with the isometric perspective, the angle is often hard to judge, so we're lenient here
             // and make it 115 degrees. 
-            return VectorMath.AngleBetweenUnits(target, unit1, unit2) > 115.0f;
+            return VectorMath.AngleBetweenPoints(target.Position.To2D(), unit1.Position.To2D(), unit2.Position.To2D()) > 115.0f;
         }
 
         

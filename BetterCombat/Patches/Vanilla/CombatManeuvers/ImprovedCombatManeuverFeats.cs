@@ -24,7 +24,6 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
             {
                 if (combatManeuver != CombatManeuver.None && combatManeuver != CombatManeuver.Overrun && combatManeuver != CombatManeuver.Grapple && combatManeuver != CombatManeuver.DirtyTrickEntangle && combatManeuver != CombatManeuver.DirtyTrickSickened)
                 {
-                    Main.Logger?.Write($"Updating feats for {Enum.GetName(typeof(CombatManeuver), combatManeuver)}");
                     var improvedCombatManeuverFeat = library.Get<BlueprintFeature>(CombatManeuverData.combatManeuverFeatIds[combatManeuver]);
                     improvedCombatManeuverFeat.RemoveComponent(improvedCombatManeuverFeat.GetComponent<AddFacts>());
                     improvedCombatManeuverFeat.SetName(Localization.CreateString(CombatManeuverData.newImprovedCombatManeuverFeatNameKeys[combatManeuver], CombatManeuverData.newImprovedCombatManeuverFeatNames[CombatManeuverData.newImprovedCombatManeuverFeatNameKeys[combatManeuver]]));
@@ -32,7 +31,6 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
                 }
             }
 
-            Main.Logger?.Write("Updating Dirty Trick - Entangle and Sickened");
             var improvedDirtyTrickFeat = library.Get<BlueprintFeature>(CombatManeuverData.combatManeuverFeatIds[CombatManeuver.DirtyTrickBlind]);
             improvedDirtyTrickFeat.AddComponent(CombatManeuverDoNotProvokeAttack.Create(CombatManeuver.DirtyTrickEntangle));
             improvedDirtyTrickFeat.AddComponent(CombatManeuverDoNotProvokeAttack.Create(CombatManeuver.DirtyTrickSickened));

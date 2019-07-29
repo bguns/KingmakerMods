@@ -1,38 +1,54 @@
 ﻿using BetterCombat.Helpers;
 using BetterCombat.Rules;
-using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Facts;
-using Kingmaker.Enums;
-using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem;
 using Kingmaker.RuleSystem.Rules;
-using Kingmaker.UnitLogic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BetterCombat.Patches.Vanilla.SoftCover
 {
     [Harmony12.HarmonyPatch(typeof(RuleCalculateAC), nameof(RuleCalculateAC.OnTrigger), Harmony12.MethodType.Normal)]
     class RuleCalculateAC_SoftCover_Patch
     {
+        private static Fact _softCoverFact;
+        private static Fact _softCoverPartialFact;
+
+        private static Fact SoftCoverFact
+        {
+            get
+            {
+                if (_softCoverFact == null)
+                {
+                    var softCoverUnitFact = Library.Create<BlueprintUnitFact>();
+                    softCoverUnitFact.SetName(Localization.CreateString(SoftCoverData.SoftCoverNameKey, SoftCoverData.SoftCoverName));
+                    _softCoverFact = new Fact(softCoverUnitFact);
+                }
+                return _softCoverFact;
+            }
+        }
+
+        private static Fact SoftCoverPartialFact
+        {
+            get
+            {
+                if (_softCoverPartialFact == null)
+                {
+                    var softCoverPartialUnitFact = Library.Create<BlueprintUnitFact>();
+                    softCoverPartialUnitFact.SetName(Localization.CreateString(SoftCoverData.SoftCoverPartialNameKey, SoftCoverData.SoftCoverPartialName));
+                    _softCoverPartialFact = new Fact(softCoverPartialUnitFact);
+                }
+                return _softCoverPartialFact;
+            }
+        }
+
         [Harmony12.HarmonyPrefix]
         static bool Prefix(RuleCalculateAC __instance, RulebookEventContext context)
         {
-            var softCoverUnitFact = Helpers.Library.Create<BlueprintUnitFact>();
-            var softCoverPartialUnitFact = Helpers.Library.Create<BlueprintUnitFact>();
-            softCoverUnitFact.SetName(Localization.CreateString(SoftCoverData.SoftCoverNameKey, SoftCoverData.SoftCoverName));
-            softCoverPartialUnitFact.SetName(Localization.CreateString(SoftCoverData.SoftCoverPartialNameKey, SoftCoverData.SoftCoverPartialName));
             Main.Logger?.Write("SoftCover prefix patch triggered");
-            Cover cover = Rulebook.Trigger(new RuleCheckSoftCover(__instance.Initiator, __instance.Target)).Result;
+            Cover cover = Rulebook.Trigger(new RuleCheckSoftCover(__instance.Initiator, __instance.Target, __instance.AttackType)).Result;
             if (cover == Cover.Full)
-                //__instance.AddTemporaryModifier(__instance.Target.Stats.AC.AddModifier(4, null, ModifierDescriptor.Other));
-                __instance.AddBonus(4, new Fact(softCoverUnitFact));
+                __instance.AddBonus(4, SoftCoverFact);
             else if (cover == Cover.Partial)
-                //__instance.AddTemporaryModifier(__instance.Target.Stats.AC.AddModifier(2, null, ModifierDescriptor.Other));
-                __instance.AddBonus(2, new Fact(softCoverPartialUnitFact));
+                __instance.AddBonus(2, SoftCoverPartialFact);
                 Main.Logger?.Write($"SoftCover calculated - result = {cover.ToString()}");
             return true;
         }

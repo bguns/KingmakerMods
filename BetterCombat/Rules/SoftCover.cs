@@ -29,17 +29,25 @@ namespace BetterCombat.Rules
     {
         public List<UnitEntityData> IgnoreUnits { get; private set; }
 
+        public bool AttackerIgnoresCover { get; set; }
+
+        public AttackType AttackType { get; private set; }
+
         public Cover Result { get; set;}
 
-        public RuleCheckSoftCover(UnitEntityData attacker, UnitEntityData target)
+        public RuleCheckSoftCover(UnitEntityData attacker, UnitEntityData target, AttackType attackType)
             : base(attacker, target)
         {
             IgnoreUnits = new List<UnitEntityData>();
             Result = Cover.None;
+            AttackType = attackType;
         }
 
         public override void OnTrigger(RulebookEventContext context)
         {
+            if (AttackerIgnoresCover)
+                return;
+
             Main.Logger?.Write($"RuleCheckSoftCover from {Initiator.Descriptor.CharacterName} to {Target.UniqueId}");
             Vector2 fromPosition = Initiator.Position.To2D();
             Vector2 toPosition = Target.Position.To2D();
@@ -84,6 +92,21 @@ namespace BetterCombat.Rules
                     Result = Cover.Partial;
                 }
             }
+        }
+    }
+
+    [AllowedOn(typeof(BlueprintUnitFact))]
+    public class IgnoreCoverOnRangedAttack : RuleInitiatorLogicComponent<RuleCheckSoftCover>
+    {
+        public override void OnEventAboutToTrigger(RuleCheckSoftCover evt)
+        {
+            if (evt.AttackType.IsRanged())
+                evt.AttackerIgnoresCover = true;
+        }
+
+
+        public override void OnEventDidTrigger(RuleCheckSoftCover evt)
+        {
         }
     }
 

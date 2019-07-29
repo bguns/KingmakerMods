@@ -15,6 +15,10 @@ namespace BetterCombat.Patches.Vanilla
     // IMPORTANT: LoadDictionary will possibly be run multiple times. m_Initialized will be true subsequent runs, which will
     //  cause the method to return instantly, however, ANY POSTFIX METHODS WILL STILL RUN, and possibly add multiple copies
     //  of the same feature/component etc...
+    //
+    // Given the above observation, I don't really think that the strategy as described in the first paragraph is all that
+    // reliable, and will just use __instance in all LoadDictionary postfixes. I'm leaving this active just in case, it
+    // does almost nothing.
     [Harmony12.HarmonyPatch(typeof(LibraryScriptableObject), nameof(LibraryScriptableObject.LoadDictionary), new Type[0])]
     static class LibraryScriptableObject_LoadDictionary_Patch
     {

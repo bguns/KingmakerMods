@@ -4,7 +4,7 @@
     <TargetFramework>net471</TargetFramework>
     <DebugType>Full</DebugType>
     <AssemblyName>CloserToTabletop</AssemblyName>
-    <RootNamespace>CTT</RootNamespace>
+    <RootNamespace>BetterCombat</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />

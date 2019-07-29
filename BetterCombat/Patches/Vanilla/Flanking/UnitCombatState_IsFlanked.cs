@@ -83,7 +83,7 @@ namespace BetterCombat.Patches.Vanilla.Flanking
             // Check if a specific unit is flanking the target (with a possible extra preconditions test)
             if (currentParameters.FlankedBy != null && !currentParameters.FlankedByAnyone)
             {
-                __result = __instance.Unit.isFlankedByUnit(currentParameters.FlankedBy, currentParameters.FlankingPreconditions);
+                __result = __instance.Unit.IsFlankedByUnit(currentParameters.FlankedBy, currentParameters.FlankingPreconditions);
             }
             // Check if the target is by any two attackers (adhering to possible preconditions)
             else if (currentParameters.FlankedByAnyone)
@@ -93,7 +93,7 @@ namespace BetterCombat.Patches.Vanilla.Flanking
                     // Ignore the ExceptFlankedBy unit (if it is not null) for the flanking test
                     if (currentParameters.ExceptFlankedBy == null || unitEntityData != currentParameters.ExceptFlankedBy)
                     {
-                        if (__instance.Unit.isFlankedByUnit(unitEntityData, currentParameters.FlankingPreconditions))
+                        if (__instance.Unit.IsFlankedByUnit(unitEntityData, currentParameters.FlankingPreconditions))
                         {
                             __result = true;
                             break;

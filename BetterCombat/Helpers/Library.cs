@@ -41,7 +41,7 @@ namespace BetterCombat.Helpers
             {
                 return (T)library.BlueprintsByAssetId[assetId];
             }
-            catch(KeyNotFoundException ex)
+            catch (KeyNotFoundException)
             {
                 Main.Logger?.Write($"Key {assetId} not present in library.");
                 return null;
@@ -60,7 +60,7 @@ namespace BetterCombat.Helpers
             obj.SetComponents(obj.ComponentsArray.RemoveFromArray(component));
         }
 
-        public static void RemoveAll<T>(this BlueprintScriptableObject obj) where T : BlueprintComponent
+        public static void RemoveAllComponentsOfType<T>(this BlueprintScriptableObject obj) where T : BlueprintComponent
         {
             obj.SetComponents(obj.ComponentsArray.RemoveAllFromArray(e => e.GetType() == typeof(T)));
         }

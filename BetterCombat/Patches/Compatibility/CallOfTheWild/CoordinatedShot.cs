@@ -43,7 +43,7 @@ namespace BetterCombat.Patches.Compatibility
 
             foreach(UnitEntityData unit in evt.Target.CombatState.EngagedBy)
             {
-                if (evt.Target.isFlankedByUnit(unit, coordinatedShotFlankingPreconditions))
+                if (evt.Target.IsFlankedByUnit(unit, coordinatedShotFlankingPreconditions))
                 {
                     evt.AddBonus(AttackBonus + AdditionalFlankBonus, this.Fact);
                     return;

@@ -15,14 +15,14 @@ namespace BetterCombat.Rules
 {
     public static class Flanking
     {
-        public static bool isFlankedByUnit(
+        public static bool IsFlankedByUnit(
             this UnitEntityData target,
             UnitEntityData attacker,
             Func<UnitEntityData, UnitEntityData, UnitEntityData, bool> flankingPreconditions = null)
         {
             // You can only flank if you're not flat-footed vs. your target. Perhaps this should be a patch on IsEngage,
             // but I'm not sure what the consequences of that would be, so we do it here.
-            if (attacker.isFlatFootedTo(target))
+            if (attacker.IsFlatFootedTo(target))
             {
                 Main.Logger?.Write($"Flanking: {attacker.CharacterName} is flat-footed to {target.CharacterName}.");
                 return false;
@@ -33,13 +33,13 @@ namespace BetterCombat.Rules
                 if (attacker2 == attacker)
                     continue;
 
-                if (target.isFlankedByUnits(attacker, attacker2, flankingPreconditions))
+                if (target.IsFlankedByUnits(attacker, attacker2, flankingPreconditions))
                     return true;
             }
             return false;
         }
 
-        public static bool isFlankedByUnits(
+        public static bool IsFlankedByUnits(
             this UnitEntityData target,
             UnitEntityData unit1,
             UnitEntityData unit2,
@@ -50,12 +50,12 @@ namespace BetterCombat.Rules
                 return false;
 
             // Flanking requires not being flat-footed (see above).
-            if (unit1.isFlatFootedTo(target))
+            if (unit1.IsFlatFootedTo(target))
             {
                 Main.Logger?.Write($"Flanking: {unit1.CharacterName} is flat-footed to {target.CharacterName}.");
                 return false;
             }
-            if (unit2.isFlatFootedTo(target))
+            if (unit2.IsFlatFootedTo(target))
             {
                 Main.Logger?.Write($"Flanking: {unit2.CharacterName} is flat-footed to {target.CharacterName}.");
                 return false;
@@ -79,7 +79,7 @@ namespace BetterCombat.Rules
 
         #region Extension methods
 
-        private static bool isFlatFootedTo(this UnitEntityData unit1, UnitEntityData unit2)
+        private static bool IsFlatFootedTo(this UnitEntityData unit1, UnitEntityData unit2)
         {
             return Rulebook.Trigger(new RuleCheckTargetFlatFooted(unit2, unit1)).IsFlatFooted;
         }
@@ -87,7 +87,7 @@ namespace BetterCombat.Rules
         // Setter for private property Result
         static readonly FastSetter setResult = Harmony.CreateSetter<RuleCalculateAttackBonus>(nameof(RuleCalculateAttackBonus.Result));
 
-        public static void increaseFlankingBonusTo(this RuleCalculateAttackBonus evt, int increaseTo)
+        public static void IncreaseFlankingBonusTo(this RuleCalculateAttackBonus evt, int increaseTo)
         {
             int diff = 0;
 

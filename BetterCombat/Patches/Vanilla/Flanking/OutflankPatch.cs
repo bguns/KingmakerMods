@@ -57,7 +57,7 @@ namespace BetterCombat.Patches.Vanilla.Flanking
 
             foreach(UnitEntityData aooTestUnit in attackRollInstance.Target.CombatState.EngagedBy)
             {
-                if (attackRollInstance.Target.isFlankedByUnits(aooTestUnit, attackRollInstance.Initiator, outflankParticipantConditions))
+                if (attackRollInstance.Target.IsFlankedByUnits(aooTestUnit, attackRollInstance.Initiator, outflankParticipantConditions))
                 {
                     Main.Logger?.Write("Outflank provoked AoO");
                     Game.Instance.CombatEngagementController.ForceAttackOfOpportunity(aooTestUnit, attackRollInstance.Target);
@@ -81,9 +81,9 @@ namespace BetterCombat.Patches.Vanilla.Flanking
             Func<UnitEntityData, UnitEntityData, UnitEntityData, bool> outflankPreconditions =
                 (target, owner, flankingPartner) => owner.Descriptor.State.Features.SoloTactics || flankingPartner.Descriptor.HasFact(outflankFact);
 
-            if (evt.Target.isFlankedByUnit(outflankAttackBonusInstance.Owner.Unit, outflankPreconditions))
+            if (evt.Target.IsFlankedByUnit(outflankAttackBonusInstance.Owner.Unit, outflankPreconditions))
             {
-                evt.increaseFlankingBonusTo(4);
+                evt.IncreaseFlankingBonusTo(4);
             }
         }
     }

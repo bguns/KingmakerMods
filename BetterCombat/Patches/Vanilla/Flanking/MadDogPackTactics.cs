@@ -39,9 +39,9 @@ namespace BetterCombat.Patches.Vanilla.Flanking
             Func<UnitEntityData, UnitEntityData, UnitEntityData, bool> packTacticsFlankingConditions =
             (target, owner, flankingPartner) => (owner.Descriptor.IsPet && owner.Descriptor.Master == flankingPartner) || (flankingPartner.Descriptor.IsPet && flankingPartner.Descriptor.Master == owner);
 
-            if (evt.Target.isFlankedByUnit(madDogPackTacticsInstance.Owner.Unit, packTacticsFlankingConditions))
+            if (evt.Target.IsFlankedByUnit(madDogPackTacticsInstance.Owner.Unit, packTacticsFlankingConditions))
             {
-                evt.increaseFlankingBonusTo(4);
+                evt.IncreaseFlankingBonusTo(4);
             }
         }
     }

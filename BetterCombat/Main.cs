@@ -7,6 +7,7 @@ using Kingmaker.Blueprints;
 using BetterCombat.Patches.Vanilla.AttackOfOpportunity;
 using BetterCombat.Patches.Mod;
 using BetterCombat.Patches.Compatibility.CallOfTheWild;
+using BetterCombat.Patches.Compatibility.EldritchArcana;
 
 namespace BetterCombat
 {
@@ -65,6 +66,11 @@ namespace BetterCombat
             if (HarmonyPatcher.ApplyPatches(CallOfTheWildPatches.AllPatches, "Call of the Wild compatibility"))
             {
                 Logger.Append("Compatibility - Call of the Wild: OK");
+            }
+
+            if (HarmonyPatcher.ApplyPatches(EldritchArcanaPatches.AllPatches, "Eldritch Arcana compatibility"))
+            {
+                Logger.Append("Compatibility - Eldritch Arcana: OK");
             }
 
             Logger.Flush();

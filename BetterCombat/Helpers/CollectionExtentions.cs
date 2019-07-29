@@ -57,5 +57,16 @@ namespace BetterCombat.Helpers
             var list = array.ToList();
             return list.Remove(value) ? list.ToArray() : array;
         }
+
+        public static T[] RemoveAllFromArray<T>(this T[] array, Predicate<T> match)
+        {
+            var list = array.ToList();
+            return list.RemoveAll(match) > 0 ? list.ToArray() : array;
+        }
+
+        public static bool ContainsElementOfType<T>(this T[] array, Type type)
+        {
+            return array.ToList().Any(e => e.GetType() == type);
+        }
     }
 }

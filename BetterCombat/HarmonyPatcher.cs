@@ -80,6 +80,11 @@ namespace BetterCombat
             }
         }
 
+        internal void ManualPatch(MethodInfo method, Harmony12.HarmonyMethod prefix = null, Harmony12.HarmonyMethod postfix = null)
+        {
+            m_harmonyInstance.Patch(method, prefix: prefix, postfix: postfix);
+        }
+
         internal void CheckPatchingSuccess()
         {
             // Check to make sure we didn't forget to patch something.

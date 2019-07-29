@@ -23,10 +23,29 @@ namespace BetterCombat.Helpers
 
         #region Extensions
 
+        #region Library
+
+        private static FastGetter library_get_m_initialized = Harmony.CreateFieldGetter(typeof(LibraryScriptableObject), "m_Initialized");
+
+        public static bool Initialized(this LibraryScriptableObject library)
+        {
+            return (bool)library_get_m_initialized(library);
+        }
+
+        #endregion
+
         #region Blueprints
         public static T Get<T>(this LibraryScriptableObject library, String assetId) where T : BlueprintScriptableObject
         {
-            return (T)library.BlueprintsByAssetId[assetId];
+            try
+            {
+                return (T)library.BlueprintsByAssetId[assetId];
+            }
+            catch(KeyNotFoundException ex)
+            {
+                Main.Logger?.Write($"Key {assetId} not present in library.");
+                return null;
+            }
         }
         #endregion
 
@@ -39,6 +58,11 @@ namespace BetterCombat.Helpers
         public static void RemoveComponent(this BlueprintScriptableObject obj, BlueprintComponent component)
         {
             obj.SetComponents(obj.ComponentsArray.RemoveFromArray(component));
+        }
+
+        public static void RemoveAll<T>(this BlueprintScriptableObject obj) where T : BlueprintComponent
+        {
+            obj.SetComponents(obj.ComponentsArray.RemoveAllFromArray(e => e.GetType() == typeof(T)));
         }
 
         public static void SetComponents(this BlueprintScriptableObject obj, params BlueprintComponent[] components)

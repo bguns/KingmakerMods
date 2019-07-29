@@ -1,10 +1,10 @@
 ﻿using BetterCombat.Helpers;
-using BetterCombat.Rules;
+using BetterCombat.Rules.SoftCover;
 using Kingmaker.Blueprints.Facts;
 using Kingmaker.RuleSystem;
 using Kingmaker.RuleSystem.Rules;
 
-namespace BetterCombat.Patches.Vanilla.SoftCover
+namespace BetterCombat.Patches.Mod.SoftCover
 {
     [Harmony12.HarmonyPatch(typeof(RuleCalculateAC), nameof(RuleCalculateAC.OnTrigger), Harmony12.MethodType.Normal)]
     class RuleCalculateAC_SoftCover_Patch
@@ -43,27 +43,12 @@ namespace BetterCombat.Patches.Vanilla.SoftCover
         [Harmony12.HarmonyPrefix]
         static bool Prefix(RuleCalculateAC __instance, RulebookEventContext context)
         {
-            Main.Logger?.Write("SoftCover prefix patch triggered");
             Cover cover = Rulebook.Trigger(new RuleCheckSoftCover(__instance.Initiator, __instance.Target, __instance.AttackType)).Result;
             if (cover == Cover.Full)
                 __instance.AddBonus(4, SoftCoverFact);
             else if (cover == Cover.Partial)
                 __instance.AddBonus(2, SoftCoverPartialFact);
-                Main.Logger?.Write($"SoftCover calculated - result = {cover.ToString()}");
             return true;
         }
     }
-
-    /*[Harmony12.HarmonyPatch(typeof(UnitDescriptor), nameof(UnitDescriptor.Initialize), Harmony12.MethodType.Normal)]
-    class UnitDescriptor_AddSoftCoverFact_Patch
-    {
-        static LibraryScriptableObject library => Main.Library;
-
-        [Harmony12.HarmonyPostfix]
-        static void Postfix(UnitDescriptor __instance)
-        {
-            var softCoverFact = Helpers.Library.Create<ACBonusSoftCover>();
-            __instance.AddFact(softCoverFact);
-        }
-    }*/
 }

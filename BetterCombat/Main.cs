@@ -2,12 +2,11 @@
 using System;
 using UnityModManagerNet;
 using UnityEngine;
-using System.Collections.Generic;
 using BetterCombat.Patches.Vanilla;
 using Kingmaker.Blueprints;
-using BetterCombat.Patches.Vanilla.CombatManeuvers;
 using BetterCombat.Patches.Vanilla.AttackOfOpportunity;
-using BetterCombat.Patches.Vanilla.SoftCover;
+using BetterCombat.Patches.Mod;
+using BetterCombat.Patches.Compatibility.CallOfTheWild;
 
 namespace BetterCombat
 {
@@ -57,13 +56,16 @@ namespace BetterCombat
                 Logger.Append("Combat Maneuver patches: OK");
             }
 
-            HarmonyPatcher.ApplyPatch(typeof(LocalizationManager_AddSoftCoverLocalization_Patch), "Soft cover localization");
-
-            if (HarmonyPatcher.ApplyPatch(typeof(RuleCalculateAC_SoftCover_Patch), "Soft cover patch"))
+            if (HarmonyPatcher.ApplyPatches(SoftCoverPatches.AllPatches, "Soft cover patch"))
             {
-                Logger.Append("Soft cover patch: OK");
+                Logger.Append("Soft cover patches: OK");
             }
 
+            // Compatibility
+            if (HarmonyPatcher.ApplyPatches(CallOfTheWildPatches.AllPatches, "Call of the Wild compatibility"))
+            {
+                Logger.Append("Compatibility - Call of the Wild: OK");
+            }
 
             Logger.Flush();
 

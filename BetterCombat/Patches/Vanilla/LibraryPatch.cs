@@ -11,6 +11,10 @@ namespace BetterCombat.Patches.Vanilla
     // This patch is used to set the Main.Library reference. It has a priority of First. This allows other additions to the 
     // blueprint library to use their own patches, referring to Main.Library, and avoids necessitating all library patches
     // to be somehow grouped in one huge patch method.
+    //
+    // IMPORTANT: LoadDictionary will possibly be run multiple times. m_Initialized will be true subsequent runs, which will
+    //  cause the method to return instantly, however, ANY POSTFIX METHODS WILL STILL RUN, and possibly add multiple copies
+    //  of the same feature/component etc...
     [Harmony12.HarmonyPatch(typeof(LibraryScriptableObject), nameof(LibraryScriptableObject.LoadDictionary), new Type[0])]
     static class LibraryScriptableObject_LoadDictionary_Patch
     {

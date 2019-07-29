@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterCombat.Patches.Vanilla.SoftCover
+namespace BetterCombat.Patches.Mod.SoftCover
 {
     [Harmony12.HarmonyPatch(typeof(LocalizationManager), "LoadPack", Harmony12.MethodType.Normal)]
     class LocalizationManager_AddSoftCoverLocalization_Patch

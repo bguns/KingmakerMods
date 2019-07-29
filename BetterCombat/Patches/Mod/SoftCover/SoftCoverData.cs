@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterCombat.Patches.Vanilla.SoftCover
+namespace BetterCombat.Patches.Mod.SoftCover
 {
     internal static class SoftCoverData
     {
@@ -13,5 +13,7 @@ namespace BetterCombat.Patches.Vanilla.SoftCover
 
         internal static string SoftCoverPartialNameKey = "04b56844-104e-4ad0-a64f-cd40646bfc28";
         internal static string SoftCoverPartialName = "Soft Cover (Partial)";
+
+        internal static string ImprovedPreciseShotFeatId = "46f970a6b9b5d2346b10892673fe6e74";
     }
 }

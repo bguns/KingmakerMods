@@ -14,24 +14,37 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
 {
     [Harmony12.HarmonyPatch(typeof(LibraryScriptableObject), nameof(LibraryScriptableObject.LoadDictionary), new Type[0])]
     class Library_ModifyCombatManeuverFeats_Patch
-    {
-        static LibraryScriptableObject library => Main.Library;
+    { 
+
+        static bool initialized = false;
+
+        [Harmony12.HarmonyPrefix]
+        static bool Prefix(LibraryScriptableObject __instance)
+        {
+            initialized = __instance.Initialized();
+            return true;
+        }
 
         [Harmony12.HarmonyPostfix]
-        static void Postfix()
+        static void Postfix(LibraryScriptableObject __instance)
         {
+            if (initialized)
+                return;
+
+            Main.Logger?.Write("ModifyCombatManeuverFeats Postfix");
+
             foreach (var combatManeuver in Enum.GetValues(typeof(CombatManeuver)).Cast<CombatManeuver>())
             {
                 if (combatManeuver != CombatManeuver.None && combatManeuver != CombatManeuver.Overrun && combatManeuver != CombatManeuver.Grapple && combatManeuver != CombatManeuver.DirtyTrickEntangle && combatManeuver != CombatManeuver.DirtyTrickSickened)
                 {
-                    var improvedCombatManeuverFeat = library.Get<BlueprintFeature>(CombatManeuverData.combatManeuverFeatIds[combatManeuver]);
+                    var improvedCombatManeuverFeat = __instance.Get<BlueprintFeature>(CombatManeuverData.combatManeuverFeatIds[combatManeuver]);
                     improvedCombatManeuverFeat.RemoveComponent(improvedCombatManeuverFeat.GetComponent<AddFacts>());
                     improvedCombatManeuverFeat.SetName(Localization.CreateString(CombatManeuverData.newImprovedCombatManeuverFeatNameKeys[combatManeuver], CombatManeuverData.newImprovedCombatManeuverFeatNames[CombatManeuverData.newImprovedCombatManeuverFeatNameKeys[combatManeuver]]));
                     improvedCombatManeuverFeat.AddComponent(CombatManeuverDoNotProvokeAttack.Create(combatManeuver));
                 }
             }
 
-            var improvedDirtyTrickFeat = library.Get<BlueprintFeature>(CombatManeuverData.combatManeuverFeatIds[CombatManeuver.DirtyTrickBlind]);
+            var improvedDirtyTrickFeat = __instance.Get<BlueprintFeature>(CombatManeuverData.combatManeuverFeatIds[CombatManeuver.DirtyTrickBlind]);
             improvedDirtyTrickFeat.AddComponent(CombatManeuverDoNotProvokeAttack.Create(CombatManeuver.DirtyTrickEntangle));
             improvedDirtyTrickFeat.AddComponent(CombatManeuverDoNotProvokeAttack.Create(CombatManeuver.DirtyTrickSickened));
         }

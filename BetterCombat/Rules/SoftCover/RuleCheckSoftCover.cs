@@ -65,11 +65,11 @@ namespace BetterCombat.Rules.SoftCover
                 // DO THE THING!
                 float lineDistance = Vector2.Distance(VectorMath.NearestPointOnLineToPoint(fromPosition, toPosition, unitPosition), unitPosition);
 
-                float corpulence = unit.Corpulence;
-                float half = unit.Corpulence * 0.5f;
-                if (lineDistance < corpulence)
+                float unitCorpulence = unit.Corpulence;
+                float targetCorpulence = Target.Corpulence;
+                if (lineDistance < unitCorpulence + targetCorpulence)
                 {
-                    if (Result == Cover.Partial || lineDistance < half)
+                    if (Result == Cover.Partial || lineDistance < unitCorpulence)
                     {
                         Result = Cover.Full;
                         break;

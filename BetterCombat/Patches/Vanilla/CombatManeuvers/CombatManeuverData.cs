@@ -86,5 +86,12 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
             { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.Disarm], "You can attempt to disarm a foe in melee as a standard action.  If you do not have the Improved Disarm feat, or a similar ability, attempting to disarm a foe provokes an attack of opportunity from the target of your maneuver.\nIf your combat maneuver is successful, the target cannot use his weapons for 1 round.\nFor every 5 by which your attack exceeds your opponent's CMD, the disarmed condition lasts 1 additional round." },
             { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.SunderArmor], "You can attempt to dislodge a piece of armor worn by your opponent. If you do not have the Improved Sunder feat, or a similar ability, attempting to sunder armor provokes an attack of opportunity from the target of your maneuver.\nIf your combat maneuver is successful, the target loses its bonuses from armor for 1 round.\nFor every 5 by which your attack exceeds your opponent's CMD, the penalty lasts 1 additional round." }
         };
+
+        internal static readonly Dictionary<string, string> abilitiesThatShouldReplaceContextActionCombatManeuver = new Dictionary<string, string>
+        {
+            { "a4445991c5bb0ca40ac152bb4bf46a3c", "AspectOfTheWolfTripAbility" },
+            { "1202b3d188c9bdc46987a5da168ec6d9", "TwoHandedFighterPiledriverTripAbility" },
+            { "b789cfc41fa326f419d77efc2e5c6632", "TwoHandedFighterPiledriverBullRushAbility"}
+        };
     }
 }

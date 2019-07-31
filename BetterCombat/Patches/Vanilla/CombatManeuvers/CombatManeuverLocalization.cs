@@ -19,9 +19,11 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
         [Harmony12.HarmonyPostfix]
         static void Postfix(Locale locale, ref LocalizationPack __result)
         {
+
+            AddImprovedCombatManeuverLocalizedNames(__result);
+
             if (Locale.enGB.Equals(locale))
             {
-                AddImprovedCombatManeuverLocalizedNames(__result);
                 ChangeImprovedCombatManeuverFeatDescriptions(__result);
                 ChangeCombatManeuverActionDescriptions(__result);
             }

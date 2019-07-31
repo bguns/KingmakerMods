@@ -16,10 +16,10 @@ namespace BetterCombat.Patches.Mod.SoftCover
         [Harmony12.HarmonyPostfix]
         static void Postfix(Locale locale, ref LocalizationPack __result)
         {
-            if (Locale.enGB.Equals(locale))
-            {
+            //if (Locale.enGB.Equals(locale))
+            //{
                 AddSoftCoverLocalizedNames(__result);
-            }
+            //}
 
         }
 

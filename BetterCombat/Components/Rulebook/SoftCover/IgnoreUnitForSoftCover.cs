@@ -11,24 +11,24 @@ namespace BetterCombat.Components.Rulebook.SoftCover
     [AllowedOn(typeof(BlueprintUnitFact))]
     public class IgnoreUnitForSoftCover : OwnedGameLogicComponent<UnitDescriptor>, IGlobalRulebookHandler<RuleCheckSoftCover>, IRulebookHandler<RuleCheckSoftCover>, IGlobalRulebookSubscriber
     {
-        public bool RangedOnly;
-        public bool MeleeOnly;
-        public bool TouchOnly;
+        public bool RangedAttacksOnly;
+        public bool MeleeAttacksOnly;
+        public bool TouchAttacksOnly;
 
         public void OnEventAboutToTrigger(RuleCheckSoftCover evt)
         {
-            if (Check(evt))
+            if (CheckAttackType(evt))
                 evt.IgnoreUnits.Add(Owner.Unit);
         }
         
-        private bool Check(RuleCheckSoftCover evt)
+        private bool CheckAttackType(RuleCheckSoftCover evt)
         {
-            return !RangedOnly && !MeleeOnly && !TouchOnly
-                    || RangedOnly && TouchOnly && evt.AttackType == AttackType.RangedTouch
-                    || MeleeOnly && TouchOnly && evt.AttackType == AttackType.Touch
-                    || RangedOnly && !TouchOnly && evt.AttackType.IsRanged()
-                    || MeleeOnly && !TouchOnly && evt.AttackType.IsMelee()
-                    || TouchOnly && !RangedOnly && !MeleeOnly && evt.AttackType.IsTouch();
+            return !RangedAttacksOnly && !MeleeAttacksOnly && !TouchAttacksOnly
+                    || RangedAttacksOnly && TouchAttacksOnly && evt.AttackType == AttackType.RangedTouch
+                    || MeleeAttacksOnly && TouchAttacksOnly && evt.AttackType == AttackType.Touch
+                    || RangedAttacksOnly && !TouchAttacksOnly && evt.AttackType.IsRanged()
+                    || MeleeAttacksOnly && !TouchAttacksOnly && evt.AttackType.IsMelee()
+                    || TouchAttacksOnly && !RangedAttacksOnly && !MeleeAttacksOnly && evt.AttackType.IsTouch();
         }
         public void OnEventDidTrigger(RuleCheckSoftCover evt)
         {

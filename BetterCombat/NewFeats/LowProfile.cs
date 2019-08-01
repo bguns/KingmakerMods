@@ -51,7 +51,7 @@ namespace BetterCombat.NewFeats
 
             var ignoreSoftCoverComponent = Library.Create<IgnoreUnitForSoftCover>(component =>
             {
-                component.RangedOnly = true;
+                component.RangedAttacksOnly = true;
             });
 
             feat.AddComponent(acComponent);

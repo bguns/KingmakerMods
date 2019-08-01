@@ -25,9 +25,13 @@ namespace BetterCombat.Patches.Mod.SoftCover
                 return;
 
             var improvedPreciseStrikeFeat = __instance.Get<BlueprintFeature>(SoftCoverData.ImprovedPreciseShotFeatId);
-            if (improvedPreciseStrikeFeat.GetComponent<IgnoreSoftCoverOnRangedAttack>() == null)
+            if (improvedPreciseStrikeFeat.GetComponent<IgnoreSoftCover>() == null)
             {
-                improvedPreciseStrikeFeat.AddComponent(Library.Create<IgnoreSoftCoverOnRangedAttack>());
+                var ignoreSoftCoverComponent = Library.Create<IgnoreSoftCover>(component =>
+                {
+                    component.RangedAttacksOnly = true;
+                });
+                improvedPreciseStrikeFeat.AddComponent(ignoreSoftCoverComponent);
             }
         }
     }

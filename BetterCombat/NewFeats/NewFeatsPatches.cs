@@ -15,7 +15,11 @@ namespace BetterCombat.NewFeats
         internal static Type[] AllPatches =
         {
             typeof(LowProfile_AddLocalization_Patch),
-            typeof(LowProfile_AddFeat_Patch)
+            typeof(LowProfile_AddFeat_Patch),
+
+            typeof(PhalanxFormation_AddLocalization_Patch),
+            typeof(PhalanxFormation_AddFeat_Patch)
+
         };
     }
 }

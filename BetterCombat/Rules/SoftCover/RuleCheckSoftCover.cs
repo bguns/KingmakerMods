@@ -66,6 +66,17 @@ namespace BetterCombat.Rules.SoftCover
                     continue;
                 }
 
+                if (unit.Descriptor.State.IsDead)
+                {
+                    Main.Logger?.Append($"{i}: unit {unit.CharacterName} ({unit.UniqueId}) is dead and does not count for cover");
+                    continue;
+                }
+
+                if (unit.Descriptor.State.Prone.Active)
+                {
+                    Main.Logger?.Append($"{i}: unit {unit.CharacterName} ({unit.UniqueId}) is prone and does not count for cover");
+                }
+
                 int sizeDifference = Target.Descriptor.State.Size - unit.Descriptor.State.Size;
 
                 // e.g. a Small character cannot provide soft cover for a Large character

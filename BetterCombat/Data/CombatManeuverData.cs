@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterCombat.Patches.Vanilla.CombatManeuvers
+namespace BetterCombat.Data
 {
     internal class CombatManeuverData
     {
+        #region BlueprintIds
+
         internal static readonly Dictionary<CombatManeuver, string> combatManeuverFeatIds = new Dictionary<CombatManeuver, string>()
         {
             { CombatManeuver.Trip, "0f15c6f70d8fb2b49aa6cc24239cc5fa" }, // (Improved) Trip
@@ -28,6 +30,17 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
             { CombatManeuver.Disarm,  "45d94c6db453cfc4a9b99b72d6afe6f6" }, // Disarm
             { CombatManeuver.SunderArmor, "fa9bfb9fd997faf49a108c4b17a00504" }  // Sunder
         };
+
+        internal static readonly Dictionary<string, string> abilitiesThatShouldReplaceContextActionCombatManeuver = new Dictionary<string, string>
+        {
+            { "a4445991c5bb0ca40ac152bb4bf46a3c", "AspectOfTheWolfTripAbility" },
+            { "1202b3d188c9bdc46987a5da168ec6d9", "TwoHandedFighterPiledriverTripAbility" },
+            { "b789cfc41fa326f419d77efc2e5c6632", "TwoHandedFighterPiledriverBullRushAbility"}
+        };
+
+        #endregion
+
+        #region Localization
 
         internal static readonly Dictionary<CombatManeuver, string> newImprovedCombatManeuverFeatNameKeys = new Dictionary<CombatManeuver, string>
         {
@@ -87,11 +100,8 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
             { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.SunderArmor], "You can attempt to dislodge a piece of armor worn by your opponent. If you do not have the Improved Sunder feat, or a similar ability, attempting to sunder armor provokes an attack of opportunity from the target of your maneuver.\nIf your combat maneuver is successful, the target loses its bonuses from armor for 1 round.\nFor every 5 by which your attack exceeds your opponent's CMD, the penalty lasts 1 additional round." }
         };
 
-        internal static readonly Dictionary<string, string> abilitiesThatShouldReplaceContextActionCombatManeuver = new Dictionary<string, string>
-        {
-            { "a4445991c5bb0ca40ac152bb4bf46a3c", "AspectOfTheWolfTripAbility" },
-            { "1202b3d188c9bdc46987a5da168ec6d9", "TwoHandedFighterPiledriverTripAbility" },
-            { "b789cfc41fa326f419d77efc2e5c6632", "TwoHandedFighterPiledriverBullRushAbility"}
-        };
+        #endregion
+
+        
     }
 }

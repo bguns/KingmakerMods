@@ -1,4 +1,5 @@
-﻿using Kingmaker.Blueprints;
+﻿using BetterCombat.Helpers;
+using Kingmaker.Blueprints;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace BetterCombat.Patches.Vanilla
     //  of the same feature/component etc...
     //
     // Given the above observation, I don't really think that the strategy as described in the first paragraph is all that
-    // reliable, and will just use __instance in all LoadDictionary postfixes. I'm leaving this active just in case, it
-    // does almost nothing.
+    // reliable, and will just use __instance in all LoadDictionary postfixes. This patch remains active because often
+    // code needs to fetch things from the library outside of a postfix context
     [Harmony12.HarmonyPatch(typeof(LibraryScriptableObject), nameof(LibraryScriptableObject.LoadDictionary), new Type[0])]
     static class LibraryScriptableObject_LoadDictionary_Patch
     {

@@ -1,4 +1,5 @@
-﻿using BetterCombat.Helpers;
+﻿using BetterCombat.Data;
+using BetterCombat.Helpers;
 using Kingmaker.Localization;
 using Kingmaker.Localization.Shared;
 using System;
@@ -20,6 +21,10 @@ namespace BetterCombat.Patches.Mod.SoftCover
             //{
                 AddSoftCoverLocalizedNames(__result);
             //}
+            if (Locale.enGB.Equals(locale))
+            {
+                ChangeImprovedPreciseShotDescription(__result);
+            }
 
         }
 
@@ -27,6 +32,11 @@ namespace BetterCombat.Patches.Mod.SoftCover
         {
             Localization.AddStringToLocalizationPack(SoftCoverData.SoftCoverNameKey, SoftCoverData.SoftCoverName, pack);
             Localization.AddStringToLocalizationPack(SoftCoverData.SoftCoverPartialNameKey, SoftCoverData.SoftCoverPartialName, pack);
+        }
+
+        private static void ChangeImprovedPreciseShotDescription(LocalizationPack pack)
+        {
+            Localization.ChangeStringForLocalizationPack(SoftCoverData.ImprovedPreciseShotDescriptionId, SoftCoverData.ImprovedPreciseShotDescription, pack);
         }
     }
 }

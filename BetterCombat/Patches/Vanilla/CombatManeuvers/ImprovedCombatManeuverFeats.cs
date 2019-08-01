@@ -1,5 +1,6 @@
-﻿using BetterCombat.Helpers;
-using BetterCombat.Rules;
+﻿using BetterCombat.Components.Rulebook.CombatManeuvers;
+using BetterCombat.Data;
+using BetterCombat.Helpers;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.RuleSystem.Rules;

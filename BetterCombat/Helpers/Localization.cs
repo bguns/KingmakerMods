@@ -51,22 +51,7 @@ namespace BetterCombat.Helpers
 
         #region Extension methods
 
-        static readonly FastSetter blueprintUnitFact_set_Description = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_Description");
-        static readonly FastSetter blueprintUnitFact_set_Icon = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_Icon");
-        static readonly FastSetter blueprintUnitFact_set_DisplayName = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_DisplayName");
-        static readonly FastGetter blueprintUnitFact_get_Description = Harmony.CreateFieldGetter<BlueprintUnitFact>("m_Description");
-        static readonly FastGetter blueprintUnitFact_get_DisplayName = Harmony.CreateFieldGetter<BlueprintUnitFact>("m_DisplayName");
-
-        public static LocalizedString GetName(this BlueprintUnitFact fact) => (LocalizedString)blueprintUnitFact_get_DisplayName(fact);
-
-        public static void SetName(this BlueprintUnitFact fact, LocalizedString name)
-        {
-            blueprintUnitFact_set_DisplayName(fact, name);
-        }
-
-        public static LocalizedString GetDescription(this BlueprintUnitFact fact) => (LocalizedString)blueprintUnitFact_get_Description(fact);
-
-
+        
 
         #endregion
     }

@@ -1,4 +1,5 @@
-﻿using BetterCombat.Helpers;
+﻿using BetterCombat.Data;
+using BetterCombat.Helpers;
 using Kingmaker.Localization;
 using Kingmaker.Localization.Shared;
 using Kingmaker.Utility;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BetterCombat.Patches.Vanilla.CombatManeuvers
 {
-    
+
 
     [Harmony12.HarmonyPatch(typeof(LocalizationManager), "LoadPack", Harmony12.MethodType.Normal)]
     class LocalizationManager_FixCombatManeuverFeatText_Patch

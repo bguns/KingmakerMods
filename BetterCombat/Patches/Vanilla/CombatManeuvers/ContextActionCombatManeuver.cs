@@ -1,4 +1,5 @@
-﻿using BetterCombat.Helpers;
+﻿using BetterCombat.Data;
+using BetterCombat.Helpers;
 using Kingmaker.Blueprints;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.UnitLogic.Abilities.Components;

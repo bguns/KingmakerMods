@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterCombat.Rules
+namespace BetterCombat.Components.Rulebook.CombatManeuvers
 {
     [AllowedOn(typeof(BlueprintUnitFact))]
     [AllowMultipleComponents]

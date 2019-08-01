@@ -8,6 +8,7 @@ using BetterCombat.Patches.Vanilla.AttackOfOpportunity;
 using BetterCombat.Patches.Mod;
 using BetterCombat.Patches.Compatibility.CallOfTheWild;
 using BetterCombat.Patches.Compatibility.EldritchArcana;
+using BetterCombat.NewFeats;
 
 namespace BetterCombat
 {
@@ -60,6 +61,11 @@ namespace BetterCombat
             if (HarmonyPatcher.ApplyPatches(SoftCoverPatches.AllPatches, "Soft cover patch"))
             {
                 Logger.Append("Soft cover patches: OK");
+            }
+
+            if (HarmonyPatcher.ApplyPatches(NewFeatsPatches.AllPatches, "New feats patches"))
+            {
+                Logger.Append("New feats patches: OK");
             }
 
             // Compatibility

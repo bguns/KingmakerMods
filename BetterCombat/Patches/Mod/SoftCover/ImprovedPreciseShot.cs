@@ -1,5 +1,6 @@
-﻿using BetterCombat.Helpers;
-using BetterCombat.Rules.SoftCover;
+﻿using BetterCombat.Components.Rulebook.SoftCover;
+using BetterCombat.Data;
+using BetterCombat.Helpers;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using System;
@@ -23,12 +24,10 @@ namespace BetterCombat.Patches.Mod.SoftCover
             if (initialized)
                 return;
 
-            Main.Logger?.Write("Library_ModifyImprovedPreciseStrike_Patch postfix");
             var improvedPreciseStrikeFeat = __instance.Get<BlueprintFeature>(SoftCoverData.ImprovedPreciseShotFeatId);
-            if (improvedPreciseStrikeFeat.GetComponent<IgnoreCoverOnRangedAttack>() == null)
+            if (improvedPreciseStrikeFeat.GetComponent<IgnoreSoftCoverOnRangedAttack>() == null)
             {
-                Main.Logger?.Write("Library_ModifyImprovedPreciseStrike_Patch adding ignore cover on ranged attack component");
-                improvedPreciseStrikeFeat.AddComponent(Library.Create<IgnoreCoverOnRangedAttack>());
+                improvedPreciseStrikeFeat.AddComponent(Library.Create<IgnoreSoftCoverOnRangedAttack>());
             }
         }
     }

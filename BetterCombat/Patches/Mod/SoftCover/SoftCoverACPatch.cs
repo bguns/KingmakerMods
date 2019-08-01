@@ -1,4 +1,5 @@
-﻿using BetterCombat.Helpers;
+﻿using BetterCombat.Data;
+using BetterCombat.Helpers;
 using BetterCombat.Rules.SoftCover;
 using Kingmaker.Blueprints.Facts;
 using Kingmaker.RuleSystem;

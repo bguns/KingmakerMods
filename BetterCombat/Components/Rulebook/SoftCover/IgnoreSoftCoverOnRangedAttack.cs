@@ -1,4 +1,5 @@
-﻿using Kingmaker.Blueprints;
+﻿using BetterCombat.Rules.SoftCover;
+using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Facts;
 using Kingmaker.RuleSystem;
 using System;
@@ -7,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterCombat.Rules.SoftCover
+namespace BetterCombat.Components.Rulebook.SoftCover
 {
     [AllowedOn(typeof(BlueprintUnitFact))]
-    public class IgnoreCoverOnRangedAttack : RuleInitiatorLogicComponent<RuleCheckSoftCover>
+    public class IgnoreSoftCoverOnRangedAttack : RuleInitiatorLogicComponent<RuleCheckSoftCover>
     {
         public override void OnEventAboutToTrigger(RuleCheckSoftCover evt)
         {

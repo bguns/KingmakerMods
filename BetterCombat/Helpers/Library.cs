@@ -1,4 +1,9 @@
-﻿using Kingmaker.Blueprints;
+﻿using BetterCombat.Data;
+using Kingmaker.Blueprints;
+using Kingmaker.Blueprints.Classes;
+using Kingmaker.Blueprints.Classes.Selection;
+using Kingmaker.Blueprints.Facts;
+using Kingmaker.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +17,27 @@ namespace BetterCombat.Helpers
     {
         #region Helpers
 
+        private static readonly FastSetter blueprintScriptableObject_set_AssetId = Harmony.CreateFieldSetter<BlueprintScriptableObject>("m_AssetGuid");
+
         public static T Create<T>(Action<T> init = null) where T : ScriptableObject
         {
             var result = ScriptableObject.CreateInstance<T>();
             if (init != null) init(result);
             return result;
         }
+
+        public static BlueprintFeature CreateFeat(FeatData featData)
+        {
+            var feat = Create<BlueprintFeature>();
+            blueprintScriptableObject_set_AssetId(feat, featData.Guid);
+            feat.SetName(Localization.CreateString(featData.DisplayNameLocalizationKey, featData.DisplayNameText));
+            feat.SetDescription(Localization.CreateString(featData.DescriptionLocalizationKey, featData.DescriptionText));
+            feat.SetIcon(featData.IconAssetGuid);
+            feat.Groups = new FeatureGroup[] { FeatureGroup.Feat };
+            return feat;
+        }
+
+        
 
         #endregion
 
@@ -32,9 +52,6 @@ namespace BetterCombat.Helpers
             return (bool)library_get_m_initialized(library);
         }
 
-        #endregion
-
-        #region Blueprints
         public static T Get<T>(this LibraryScriptableObject library, String assetId) where T : BlueprintScriptableObject
         {
             try
@@ -47,6 +64,62 @@ namespace BetterCombat.Helpers
                 return null;
             }
         }
+
+        public static void AddFeatToFeatureGroup(this LibraryScriptableObject library, BlueprintFeature feat, string featureGroupId)
+        {
+            var featGroup = library.Get<BlueprintFeatureSelection>(featureGroupId);
+            var allFeats = featGroup.AllFeatures.ToList();
+            allFeats.Add(feat);
+            featGroup.AllFeatures = allFeats.ToArray();
+
+            if (featGroup.Group == FeatureGroup.None)
+            {
+                var features = featGroup.Features.ToList();
+                features.Add(feat);
+                featGroup.Features = features.ToArray();
+            }
+        }
+
+        #endregion
+
+        #region Blueprints
+
+        static readonly FastSetter blueprintUnitFact_set_Description = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_Description");
+        static readonly FastSetter blueprintUnitFact_set_Icon = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_Icon");
+        static readonly FastSetter blueprintUnitFact_set_DisplayName = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_DisplayName");
+        static readonly FastGetter blueprintUnitFact_get_Description = Harmony.CreateFieldGetter<BlueprintUnitFact>("m_Description");
+        static readonly FastGetter blueprintUnitFact_get_DisplayName = Harmony.CreateFieldGetter<BlueprintUnitFact>("m_DisplayName");
+
+        public static LocalizedString GetName(this BlueprintUnitFact fact) => (LocalizedString)blueprintUnitFact_get_DisplayName(fact);
+
+        public static void SetName(this BlueprintUnitFact fact, LocalizedString name)
+        {
+            blueprintUnitFact_set_DisplayName(fact, name);
+        }
+
+        public static LocalizedString GetDescription(this BlueprintUnitFact fact) => (LocalizedString)blueprintUnitFact_get_Description(fact);
+
+        public static void SetDescription(this BlueprintUnitFact fact, LocalizedString description)
+        {
+            blueprintUnitFact_set_Description(fact, description);
+        }
+
+        public static void SetIcon(this BlueprintUnitFact fact, string iconAssetGuid)
+        {
+            var iconFact = Main.Library?.Get<BlueprintUnitFact>(iconAssetGuid);
+            if (iconFact == null)
+            {
+                Main.Logger?.Error($"SetIcon: asset of type {typeof(BlueprintUnitFact).Name} with guid {iconAssetGuid} not found in library.");
+                return;
+            }
+            fact.SetIcon(iconFact.Icon);
+        }
+
+        public static void SetIcon(this BlueprintUnitFact fact, Sprite icon)
+        {
+            blueprintUnitFact_set_Icon(fact, icon);
+        }
+
         #endregion
 
         #region Blueprint Components

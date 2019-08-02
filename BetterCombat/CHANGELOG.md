@@ -4,11 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1]
+
+### Fixed
+- Loading a save that did not have the mod enabled previously should now correctly add all the combat maneuver actions.
+
 ## [1.1.0]
 
 ### Added
 - New Feat: [Low Profile](https://www.d20pfsrd.com/feats/combat-feats/low-profile-combat/)
 - New Feat: [Phalanx Formation](https://www.d20pfsrd.com/feats/combat-feats/phalanx-formation-combat/)
+- Added homepage to Info.json
 ### Fixed
 - Updated Improved Precise Shot description to include cover.
 - Dead and prone units should no longer provide cover.

@@ -28,4 +28,21 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
             });
         }
     }
+
+    [Harmony12.HarmonyPatch(typeof(UnitDescriptor), nameof(UnitDescriptor.PostLoad), Harmony12.MethodType.Normal)]
+    class UnitDescriptor_AddCombatManeuverActionsIfNotPresentPostLoad_Patch
+    {
+        static LibraryScriptableObject library = Main.Library;
+
+        [Harmony12.HarmonyPostfix]
+        static void Postfix(UnitDescriptor __instance)
+        {
+            CombatManeuverData.combatManeuverActionIds.ForEach((key, value) =>
+            {
+                var action = library.Get<BlueprintAbility>(value);
+                if (action != null && !__instance.HasFact(action))
+                    __instance.AddFact(action);
+            });
+        }
+    }
 }

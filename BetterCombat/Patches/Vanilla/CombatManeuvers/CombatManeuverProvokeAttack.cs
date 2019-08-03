@@ -34,6 +34,11 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
         {
             RuleCombatManeuver_OnTrigger_ProvokeAoO_Patch.provokeAoOOnCombatManeuverAttempt[unit.UniqueId] = false;
         }
+
+        public static void ClearDoNotTriggerAoOFlagForUnit(UnitEntityData unit)
+        {
+            RuleCombatManeuver_OnTrigger_ProvokeAoO_Patch.provokeAoOOnCombatManeuverAttempt.Remove(unit.UniqueId);
+        }
     }
 
     [Harmony12.HarmonyPatch(typeof(RuleCombatManeuver), nameof(RuleCombatManeuver.OnTrigger), Harmony12.MethodType.Normal)]

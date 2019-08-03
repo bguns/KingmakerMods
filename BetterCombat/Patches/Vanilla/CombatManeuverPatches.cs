@@ -39,6 +39,7 @@ namespace BetterCombat.Patches.Vanilla
             typeof(RuleCombatManeuver_OnTrigger_ProvokeAoO_Patch),
             typeof(Library_ModifyCombatManeuverFeats_Patch),
             typeof(ManeuverOnAttack_OnEventDidTrigger_NoAoO_Patch),
+            typeof(ContextActionBreakFree_RunAction_NoAoO_Patch),
             typeof(LibraryScriptableObject_CombatManeuverContextActions_Patch)
         };
     }  

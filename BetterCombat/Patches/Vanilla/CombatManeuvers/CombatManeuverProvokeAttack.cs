@@ -47,6 +47,9 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
             bool provokeAoO;
             if (!provokeAoOOnCombatManeuverAttempt.TryGetValue(__instance.Initiator.UniqueId, out provokeAoO) || provokeAoO)
             {
+                if (!__instance.Target.CombatState.IsEngage(__instance.Initiator))
+                    return true;
+
                 __instance.Target.CombatState.AttackOfOpportunity(__instance.Initiator);
             }
             return true;

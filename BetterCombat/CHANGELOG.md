@@ -6,8 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.1.2
 
+### Changed
+- New method for calculating Soft Cover. Slower, but still ok and much more easy to tweak.
+
 ### Fixed
 - A potential AoO triggered by a combat maneuver now first checks if the target of the maneuver is actually engaged to the initiator.
+- ContextActioBreakFree (used for break free from spells like being Entangled or Webbed) no longer gives the spellcaster an AoO.
 
 ## [1.1.1]
 

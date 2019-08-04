@@ -26,26 +26,30 @@ namespace BetterCombat.Helpers
         // Taken from:
         // https://forum.unity.com/threads/how-do-i-find-the-closest-point-on-a-line.340058/#post-2199249
         // Also interesting: https://en.wikipedia.org/wiki/Scalar_projection
-        public static Vector2 NearestPointOnLineToPoint(Vector2 lineStart, Vector2 lineEnd, Vector2 point)
+        public static Vector2 NearestPointOnSegmentToPoint(Vector2 start, Vector2 end, Vector2 point)
         {
-            Vector2 line = lineEnd - lineStart;
+            Vector2 line = end - start;
             float length = line.magnitude;
             line.Normalize();
 
-            Vector2 v = point - lineStart;
+            Vector2 v = point - start;
             float d = Vector2.Dot(v, line);
             d = Mathf.Clamp(d, 0f, length);
-            return lineStart + line * d;
+            return start + line * d;
         }
 
-        public static void TangentPointsOnCircleFromPoint(Vector2 point, Vector2 circleCenter, float radius, out Vector2 tangent1, out Vector2 tangent2)
+        public static int TangentPointsOnCircleFromPoint(Vector2 point, Vector2 circleCenter, float radius, out Vector2 tangent1, out Vector2 tangent2)
         {
+            if (Vector2.Distance(point, circleCenter) <= radius)
+            {
+                tangent1 = Vector2.zero;
+                tangent2 = Vector2.zero;
+                return 0;
+            }
             Vector2 midPoint = (point + circleCenter) / 2.0f;
             float midPointCircleRadius = Vector2.Distance(point, circleCenter) / 2.0f;
 
-            CirclesIntersect(circleCenter, radius, midPoint, midPointCircleRadius, out tangent1, out tangent2);
-
-            Vector3.RotateTowards
+            return CirclesIntersect(circleCenter, radius, midPoint, midPointCircleRadius, out tangent1, out tangent2);
             
         }
 
@@ -53,7 +57,7 @@ namespace BetterCombat.Helpers
         public static int CirclesIntersect(Vector2 p0, float r0, Vector2 p1, float r1, out Vector2 t1, out Vector2 t2)
         {
             float d = Vector2.Distance(p1, p0);
-            if (d > r0 + r1 || d < Math.Abs(r0 - r1) || (d == 0.0f && r0 == r1))
+            if (d > r0 + r1 || d < Math.Abs(r0 - r1) || (d < Mathf.Epsilon && Math.Abs(r0 - r1) < Mathf.Epsilon))
             {
                 t1 = Vector2.zero;
                 t2 = Vector2.zero;
@@ -83,14 +87,15 @@ namespace BetterCombat.Helpers
             result[0] = startPoint;
             result[numberOfPoints - 1] = endPoint;
 
-            float angleBetweenPoints = AngleBetweenPoints(circleCenter, startPoint, endPoint) / numberOfPoints;
+            float angleBetweenPoints = AngleBetweenPoints(circleCenter, startPoint, endPoint) / (numberOfPoints - 1);
 
             Vector2 currentDirection = (startPoint - circleCenter).normalized;
             Vector2 endDirection = (endPoint - circleCenter).normalized;
 
             for (int i = 1; i < numberOfPoints - 1; i++)
             {
-                currentDirection = Vector3.RotateTowards(currentDirection.To3D(), endDirection.To3D(), angleBetweenPoints, 0.0f).To2D();
+                currentDirection = Vector3.RotateTowards(currentDirection.To3D(), endDirection.To3D(), angleBetweenPoints * Mathf.Deg2Rad, 0.0f).To2D();
+                result[i] = circleCenter + currentDirection * radius;
             }
 
             return result;

@@ -45,10 +45,17 @@ namespace BetterCombat.Rules.SoftCover
                 return;
             }
 
-            Vector2 fromPosition = Initiator.Position.To2D();
+
             Vector2 toPosition = Target.Position.To2D();
+            /* Vector2 fromUnitPosition = Initiator.Position.To2D();
+
+             Vector2 attackDirection = (toPosition - fromUnitPosition).normalized;
+             Vector2 fromPosition = fromUnitPosition + attackDirection * Initiator.Corpulence;*/
+            Vector2 fromPosition = Initiator.Position.To2D();
 
             int i = 0;
+
+            List<UnitEntityData> unitsToCheck = new List<UnitEntityData>();
 
             Main.Logger?.Append("Looping over units in combat...");
             foreach (UnitEntityData unit in Game.Instance.State.AwakeUnits)
@@ -104,36 +111,91 @@ namespace BetterCombat.Rules.SoftCover
                     continue;
                 }
 
+                unitsToCheck.Add(unit);
+                Main.Logger?.Append($"{i}: unit {unit.CharacterName} ({unit.UniqueId}) added to list of potential cover-providing units");
+            }
 
-                // DO THE THING!
-                float lineDistance = Vector2.Distance(VectorMath.NearestPointOnLineToPoint(fromPosition, toPosition, unitPosition), unitPosition);
+            if (unitsToCheck.Count < 1)
+            {
+                Main.Logger?.Append("No units could possibly provide cover.");
+                Main.Logger?.Flush();
+                return;
+            }
 
-                Main.Logger?.Append($"{i}: Calculating potential cover provided by unit {unit.CharacterName} ({unit.UniqueId})...");
-                Main.Logger?.Append($" - Distance from a line between the attacker and target positions to the covering unit's position = {lineDistance}");
 
-                float unitCorpulence = unit.Corpulence;
-                float targetCorpulence = Target.Corpulence;
+            Vector2 direction = (toPosition - fromPosition).normalized;
+            Vector2 up = new Vector2(direction.y, -direction.x);
+            Vector2 down = new Vector2(-direction.y, direction.x);
 
-                Main.Logger?.Append($" - Target's corpulence = {targetCorpulence}");
-                Main.Logger?.Append($" - Covering unit's corpulence = {unitCorpulence}");
+            Vector2 fromPointsStart = fromPosition + up * Initiator.Corpulence;
+            Vector2 fromPointsEnd = fromPosition + down * Initiator.Corpulence;
 
-                if (lineDistance < unitCorpulence + targetCorpulence)
+            Vector2 tangent1 = Vector2.zero;
+            Vector2 tangent2 = Vector2.zero;
+            VectorMath.TangentPointsOnCircleFromPoint(fromPointsStart, toPosition, Target.Corpulence, out tangent1, out tangent2);
+
+            Vector2 toPointsStart = Vector2.zero;
+
+            float normDist = 0.0f;
+            if (Pathfinding.VectorMath.SegmentsIntersect2D(fromPosition, toPosition, fromPointsStart, tangent1, out normDist))
+                toPointsStart = tangent2;
+            else
+                toPointsStart = tangent1;
+
+            Vector2 tangent3 = Vector2.zero;
+            Vector2 tangent4 = Vector2.zero;
+            VectorMath.TangentPointsOnCircleFromPoint(fromPointsEnd, toPosition, Target.Corpulence, out tangent3, out tangent4);
+
+            Vector2 toPointsEnd = Vector2.zero;
+            if (Pathfinding.VectorMath.SegmentsIntersect2D(fromPosition, toPosition, fromPointsEnd, tangent3, out normDist))
+                toPointsEnd = tangent4;
+            else
+                toPointsEnd = tangent3;
+
+            Vector2[] fromPoints = VectorMath.FindEquidistantPointsOnArc(fromPointsStart, fromPointsEnd, fromPosition, Initiator.Corpulence, 10);
+            Vector2[] toPoints = VectorMath.FindEquidistantPointsOnArc(toPointsStart, toPointsEnd, toPosition, Target.Corpulence, 10);
+
+            Main.Logger?.Append("Looping over lines...");
+            int raysBlocked = 0;
+            for (i = 0; i < fromPoints.Length; i++)
+            {
+                Main.Logger?.Append($" - Checking line {i} ({fromPoints[i]} to {toPoints[i]})...");
+#if DEBUG
+                if (i > 0)
                 {
-                    Main.Logger?.Append($" - Distance is smaller than target's corpulence + unit's corpulence, cover is provided by {unit.CharacterName} ({unit.UniqueId})");
-                    if (Result == Cover.Partial || lineDistance < unitCorpulence)
+                    Main.Logger?.Append($"   * Validate: lines {i} and {i - 1} intersect: {Pathfinding.VectorMath.SegmentsIntersect2D(fromPoints[i - 1], toPoints[i - 1], fromPoints[i], toPoints[i], out normDist)}");
+                }
+#endif
+                for (int j = 0; j < unitsToCheck.Count; j++)
+                {
+                    var p = VectorMath.NearestPointOnSegmentToPoint(fromPoints[i], toPoints[i], unitsToCheck[j].Position.To2D());
+                    var d = Vector2.Distance(p, unitsToCheck[j].Position.To2D());
+                    Main.Logger?.Append($"   * clonest distance of line {i} to unit {unitsToCheck[j].CharacterName} ({unitsToCheck[j].UniqueId}): {d}. Unit's corpulence: {unitsToCheck[j].Corpulence}");
+                    if (Vector2.Distance(p, unitsToCheck[j].Position.To2D()) < unitsToCheck[j].Corpulence)
                     {
-                        if (Result == Cover.Partial)
-                            Main.Logger?.Append($" - Cover is already partial, upgrading to full cover...");
-                        else if (lineDistance < unitCorpulence)
-                            Main.Logger?.Append($" - Distance is smaller than the covering unit's corpulence (i.e. the attack passes through the covering unit's circle), result is full cover");
-                        Result = Cover.Full;
-                        Main.Logger.Append($" - Cover is full, stopping loop...");
+                        raysBlocked++;
+                        Main.Logger?.Append($"   * line {i} is obstructed by unit {unitsToCheck[j].CharacterName} ({unitsToCheck[j].UniqueId}). Number of obstructed lines so far = {raysBlocked}. Continuing to next line...");
                         break;
                     }
-                    Main.Logger?.Append($" - Distance is not smaller than the covering unit's corpulence (i.e. the attack does not pass through the covering unit's circle), result is partial cover");
-                    Result = Cover.Partial;
+                    else
+                    {
+                        Main.Logger?.Append($"   * line {i} is not obstructed by unit {unitsToCheck[j].CharacterName} ({unitsToCheck[j].UniqueId})");
+                    }
                 }
+
+                if (raysBlocked > 6)
+                    break;
+
             }
+
+            Main.Logger?.Append($"Finished looping over target lines. Total lines blocked: {raysBlocked}");
+            if (raysBlocked > 6)
+                Result = Cover.Full;
+            else if (raysBlocked > 2)
+                Result = Cover.Partial;
+            else
+                Result = Cover.None;
+
 
             Main.Logger?.Append($"Final cover result: {Result}");
             Main.Logger?.Flush();

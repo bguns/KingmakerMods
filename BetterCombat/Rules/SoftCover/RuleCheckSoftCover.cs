@@ -82,6 +82,7 @@ namespace BetterCombat.Rules.SoftCover
                 if (unit.Descriptor.State.Prone.Active)
                 {
                     Main.Logger?.Append($"{i}: unit {unit.CharacterName} ({unit.UniqueId}) is prone and does not count for cover");
+                    continue;
                 }
 
                 int sizeDifference = Target.Descriptor.State.Size - unit.Descriptor.State.Size;

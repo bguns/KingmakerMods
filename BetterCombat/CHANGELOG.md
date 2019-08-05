@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.1.2
 
+### Added
+- New toggle option in the mod menu to toggle the use of the soft cover mechanic.
+
 ### Changed
 - New method for calculating Soft Cover. Should yield more intuitive results, and be more accurate when dealing with units of different sizes.
 

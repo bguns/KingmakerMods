@@ -32,6 +32,13 @@ namespace BetterCombat.Rules.SoftCover
 
         public override void OnTrigger(RulebookEventContext context)
         {
+            if (!Main.settings.UseSoftCover)
+            {
+                Main.Logger?.Write("Soft Cover Rules disabled, result of soft cover check is Cover.None");
+                Result = Cover.None;
+                return;
+            }
+
             Main.Logger?.Append("RuleCheckSoftCover Triggered");
             Main.Logger?.Append($"Attacker = {Initiator.CharacterName} ({Initiator.UniqueId})");
             Main.Logger?.Append($"Target = {Target.CharacterName} ({Target.UniqueId})");
@@ -171,7 +178,7 @@ namespace BetterCombat.Rules.SoftCover
                 {
                     var p = VectorMath.NearestPointOnSegmentToPoint(fromPoints[i], toPoints[i], unitsToCheck[j].Position.To2D());
                     var d = Vector2.Distance(p, unitsToCheck[j].Position.To2D());
-                    Main.Logger?.Append($"   * clonest distance of line {i} to unit {unitsToCheck[j].CharacterName} ({unitsToCheck[j].UniqueId}): {d}. Unit's corpulence: {unitsToCheck[j].Corpulence}");
+                    Main.Logger?.Append($"   * closest distance of line {i} to unit {unitsToCheck[j].CharacterName} ({unitsToCheck[j].UniqueId}): {d}. Unit's corpulence: {unitsToCheck[j].Corpulence}");
                     if (Vector2.Distance(p, unitsToCheck[j].Position.To2D()) < unitsToCheck[j].Corpulence)
                     {
                         raysBlocked++;

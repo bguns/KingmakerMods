@@ -24,7 +24,6 @@ namespace BetterCombat.Rules
             // but I'm not sure what the consequences of that would be, so we do it here.
             if (attacker.IsFlatFootedTo(target))
             {
-                Main.Logger?.Write($"Flanking: {attacker.CharacterName} is flat-footed to {target.CharacterName}.");
                 return false;
             }
 
@@ -51,15 +50,11 @@ namespace BetterCombat.Rules
 
             // Flanking requires not being flat-footed (see above).
             if (unit1.IsFlatFootedTo(target))
-            {
-                Main.Logger?.Write($"Flanking: {unit1.CharacterName} is flat-footed to {target.CharacterName}.");
                 return false;
-            }
+            
             if (unit2.IsFlatFootedTo(target))
-            {
-                Main.Logger?.Write($"Flanking: {unit2.CharacterName} is flat-footed to {target.CharacterName}.");
                 return false;
-            }
+           
 
             // Flanking requires threatening
             if (!unit1.IsEngage(target) || !unit2.IsEngage(target))

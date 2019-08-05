@@ -27,10 +27,8 @@ namespace BetterCombat.Patches.Compatibility.EldritchArcana
 
         public override void OnEventAboutToTrigger(RuleCalculateDamage evt)
         {
-            Main.Logger?.Write("DamageBonusAgainstFlankedTarget OnEventAboutToTrigger");
             if (evt.Target.IsFlankedByUnit(Owner.Unit) && evt.DamageBundle.Weapon?.Blueprint.IsMelee == true)
             {
-                Main.Logger?.Write($"DamageBonusAgainstFlankedTarget Adding {Bonus} damage");
                 evt.DamageBundle.WeaponDamage?.AddBonusTargetRelated(Bonus);
             }
         }

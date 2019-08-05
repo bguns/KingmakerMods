@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.1.2
 
 ### Changed
-- New method for calculating Soft Cover. Slower, but still ok and much more easy to tweak.
+- New method for calculating Soft Cover. Should yield more intuitive results, and be more accurate when dealing with units of different sizes.
 
 ### Fixed
 - A potential AoO triggered by a combat maneuver now first checks if the target of the maneuver is actually engaged to the initiator.

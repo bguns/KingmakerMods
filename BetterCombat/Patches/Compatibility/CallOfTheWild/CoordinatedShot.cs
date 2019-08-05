@@ -32,7 +32,6 @@ namespace BetterCombat.Patches.Compatibility
 
         public override void OnEventAboutToTrigger(RuleCalculateAttackBonus evt)
         {
-            Main.Logger?.Write("CoordinatedShotAttackBonus OnEventAboutToTrigger");
             if (!evt.Weapon.Blueprint.IsRanged)
                 return;
 

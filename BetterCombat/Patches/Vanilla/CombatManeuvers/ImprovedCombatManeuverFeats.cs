@@ -32,8 +32,6 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
             if (initialized)
                 return;
 
-            Main.Logger?.Write("ModifyCombatManeuverFeats Postfix");
-
             foreach (var combatManeuver in Enum.GetValues(typeof(CombatManeuver)).Cast<CombatManeuver>())
             {
                 if (combatManeuver != CombatManeuver.None && combatManeuver != CombatManeuver.Overrun && combatManeuver != CombatManeuver.Grapple && combatManeuver != CombatManeuver.DirtyTrickEntangle && combatManeuver != CombatManeuver.DirtyTrickSickened)

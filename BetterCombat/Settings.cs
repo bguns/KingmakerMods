@@ -9,6 +9,8 @@ namespace BetterCombat
 {
     public class Settings : UnityModManager.ModSettings
     {
+        public bool UseSoftCover = true;
+
         public override void Save(UnityModManager.ModEntry modEntry)
         {
             Save<Settings>(this, modEntry);

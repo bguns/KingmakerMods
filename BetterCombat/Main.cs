@@ -125,6 +125,8 @@ namespace BetterCombat
                 }
                 GUILayout.EndVertical();
             }
+
+            settings.UseSoftCover = GUILayout.Toggle(settings.UseSoftCover, "Use Soft Cover rules", fixedWidth);
         }
 
         static void OnSaveGUI(UnityModManager.ModEntry modEntry)

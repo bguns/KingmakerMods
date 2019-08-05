@@ -1,4 +1,6 @@
 ﻿using BetterCombat.Helpers;
+using Kingmaker.ElementsSystem;
+using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 using Kingmaker.Utility;
 using System;
@@ -26,21 +28,27 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
     [Harmony12.HarmonyPatch(typeof(ContextActionBreakFree), nameof(ContextActionBreakFree.RunAction), Harmony12.MethodType.Normal)]
     class ContextActionBreakFree_RunAction_NoAoO_Patch
     {
-        static FastGetter contextActionBreakFree_get_Target = Harmony.CreateGetter<ContextActionBreakFree>("Target");
+        private static TargetWrapper Target
+        {
+            get
+            {
+                return ElementsContext.GetData<MechanicsContext.Data>()?.CurrentTarget;
+            }
+        }
 
         [Harmony12.HarmonyPrefix]
         static bool Prefix(ContextActionBreakFree __instance)
         {
-            TargetWrapper target = (TargetWrapper)contextActionBreakFree_get_Target(__instance);
-            CombatManeuverProvokeAttack.DoNotTriggerAoOForNextCombatManeuver(target.Unit);
+            if (Target != null)
+                CombatManeuverProvokeAttack.DoNotTriggerAoOForNextCombatManeuver(Target.Unit);
             return true;
         }
 
         [Harmony12.HarmonyPostfix]
         static void Postfix(ContextActionBreakFree __instance)
         {
-            TargetWrapper target = (TargetWrapper)contextActionBreakFree_get_Target(__instance);
-            CombatManeuverProvokeAttack.ClearDoNotTriggerAoOFlagForUnit(target.Unit);
+            if (Target != null)
+                CombatManeuverProvokeAttack.ClearDoNotTriggerAoOFlagForUnit(Target.Unit);
         }
     }
 }

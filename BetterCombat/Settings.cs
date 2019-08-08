@@ -11,6 +11,8 @@ namespace BetterCombat
     {
         public bool UseSoftCover = true;
 
+        public bool UseQuickDraw = true;
+
         public override void Save(UnityModManager.ModEntry modEntry)
         {
             Save<Settings>(this, modEntry);

@@ -32,7 +32,7 @@ namespace BetterCombat.Rules.SoftCover
 
         public override void OnTrigger(RulebookEventContext context)
         {
-            if (!Main.settings.UseSoftCover)
+            if (!Main.Settings.UseSoftCover)
             {
                 Main.Logger?.Write("Soft Cover Rules disabled, result of soft cover check is Cover.None");
                 Result = Cover.None;

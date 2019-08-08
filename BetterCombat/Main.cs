@@ -19,7 +19,7 @@ namespace BetterCombat
 
         internal static Log Logger;
 
-        internal static Settings settings;
+        internal static Settings Settings;
 
         static string testedGameVersion = "2.0.6";
 
@@ -33,7 +33,7 @@ namespace BetterCombat
             modEntry.OnToggle = OnToggle;
             modEntry.OnGUI = OnGUI;
             modEntry.OnSaveGUI = OnSaveGUI;
-            settings = UnityModManager.ModSettings.Load<Settings>(modEntry);
+            Settings = UnityModManager.ModSettings.Load<Settings>(modEntry);
             HarmonyPatcher = new HarmonyPatcher(Harmony12.HarmonyInstance.Create(modEntry.Info.Id));
 
             if (!HarmonyPatcher.ApplyPatch(typeof(LibraryScriptableObject_LoadDictionary_Patch), "Library patch"))
@@ -61,6 +61,11 @@ namespace BetterCombat
             if (HarmonyPatcher.ApplyPatches(SoftCoverPatches.AllPatches, "Soft cover patch"))
             {
                 Logger.Append("Soft cover patches: OK");
+            }
+
+            if (HarmonyPatcher.ApplyPatches(QuickDrawPatches.AllPatches, "Quick Draw patch"))
+            {
+                Logger.Append("Quick Draw patch: OK");
             }
 
             if (HarmonyPatcher.ApplyPatches(NewFeatsPatches.AllPatches, "New feats patches"))
@@ -126,12 +131,13 @@ namespace BetterCombat
                 GUILayout.EndVertical();
             }
 
-            settings.UseSoftCover = GUILayout.Toggle(settings.UseSoftCover, "Use Soft Cover rules", fixedWidth);
+            Settings.UseSoftCover = GUILayout.Toggle(Settings.UseSoftCover, "Use Soft Cover rules", fixedWidth);
+            Settings.UseQuickDraw = GUILayout.Toggle(Settings.UseQuickDraw, "Use Quick Draw feat and mechanics", fixedWidth);
         }
 
         static void OnSaveGUI(UnityModManager.ModEntry modEntry)
         {
-            settings.Save(modEntry);
+            Settings.Save(modEntry);
         }
 
         internal static void SafeLoad(Action load, String name)

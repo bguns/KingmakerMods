@@ -18,7 +18,10 @@ namespace BetterCombat.NewFeats
             typeof(LowProfile_AddFeat_Patch),
 
             typeof(PhalanxFormation_AddLocalization_Patch),
-            typeof(PhalanxFormation_AddFeat_Patch)
+            typeof(PhalanxFormation_AddFeat_Patch),
+
+            typeof(QuickDraw_AddLocalization_Patch),
+            typeof(QuickDraw_AddFeat_Patch)
 
         };
     }

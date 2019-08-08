@@ -2,25 +2,15 @@
 using BetterCombat.Data;
 using BetterCombat.Helpers;
 using BetterCombat.Rules.Prerequisites;
-using BetterCombat.Rules.SoftCover;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Prerequisites;
-using Kingmaker.Blueprints.Classes.Selection;
-using Kingmaker.Blueprints.Facts;
 using Kingmaker.Designers.Mechanics.Facts;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
 using Kingmaker.Localization;
 using Kingmaker.Localization.Shared;
-using Kingmaker.PubSubSystem;
-using Kingmaker.RuleSystem;
-using Kingmaker.UnitLogic;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BetterCombat.NewFeats
 {

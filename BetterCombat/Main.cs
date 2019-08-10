@@ -9,7 +9,7 @@ using BetterCombat.Patches.Mod;
 using BetterCombat.Patches.Compatibility.CallOfTheWild;
 using BetterCombat.Patches.Compatibility.EldritchArcana;
 using BetterCombat.NewFeats;
-using BetterCombat.NewActions;
+using BetterCombat.NewAbilities;
 
 namespace BetterCombat
 {
@@ -64,14 +64,19 @@ namespace BetterCombat
                 Logger.Append("Soft cover patches: OK");
             }
 
-            if (HarmonyPatcher.ApplyPatches(QuickDrawPatches.AllPatches, "Quick Draw patch"))
+            if (HarmonyPatcher.ApplyPatches(SwitchHitterPatches.AllPatches, "Switch Hitter patch"))
             {
-                Logger.Append("Quick Draw patch: OK");
+                Logger.Append("Switch Hitter patch: OK");
             }
 
             if (HarmonyPatcher.ApplyPatches(NewFeatsPatches.AllPatches, "New feats patches"))
             {
                 Logger.Append("New feats patches: OK");
+            }
+
+            if (HarmonyPatcher.ApplyPatches(NewAbilitiesPatches.AllPatches, "New abilities patches"))
+            {
+                Logger.Append("New abilities patches: OK");
             }
 
             // Compatibility
@@ -84,11 +89,6 @@ namespace BetterCombat
             {
                 Logger.Append("Compatibility - Eldritch Arcana: OK");
             }
-
-            HarmonyPatcher.ApplyPatch(typeof(DropWeapons_AddLocalization_Patch), "Drop Weapons");
-            HarmonyPatcher.ApplyPatch(typeof(DropWeapons_AddAction_Patch), "Drop Weapons");
-            HarmonyPatcher.ApplyPatch(typeof(UnitDescriptor_AddDropActionOnInitialize_Patch), "Drop Weapons");
-            HarmonyPatcher.ApplyPatch(typeof(UnitDescriptor_AddDropActionIfNotPresentPostLoad_Patch), "Drop Weapons");
 
             Logger.Flush();
 
@@ -138,7 +138,6 @@ namespace BetterCombat
             }
 
             Settings.UseSoftCover = GUILayout.Toggle(Settings.UseSoftCover, "Use Soft Cover rules", fixedWidth);
-            Settings.UseQuickDraw = GUILayout.Toggle(Settings.UseQuickDraw, "Use Quick Draw feat and mechanics", fixedWidth);
         }
 
         static void OnSaveGUI(UnityModManager.ModEntry modEntry)

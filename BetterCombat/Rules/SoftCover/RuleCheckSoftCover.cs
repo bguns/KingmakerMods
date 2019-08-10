@@ -54,10 +54,6 @@ namespace BetterCombat.Rules.SoftCover
 
 
             Vector2 toPosition = Target.Position.To2D();
-            /* Vector2 fromUnitPosition = Initiator.Position.To2D();
-
-             Vector2 attackDirection = (toPosition - fromUnitPosition).normalized;
-             Vector2 fromPosition = fromUnitPosition + attackDirection * Initiator.Corpulence;*/
             Vector2 fromPosition = Initiator.Position.To2D();
 
             int i = 0;

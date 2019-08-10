@@ -1,6 +1,6 @@
 ﻿using Kingmaker.View.Equipment;
 
-namespace BetterCombat.Patches.Mod.QuickDraw
+namespace BetterCombat.Patches.Mod.SwitchHitter
 {
     [Harmony12.HarmonyPatch(typeof(UnitViewHandsEquipment), "UpdateActiveWeaponSetImmediately", Harmony12.MethodType.Normal)]
     class UnitViewHandsEquipment_UpdateActiveWeaponSetImmediately_LoggerPatch

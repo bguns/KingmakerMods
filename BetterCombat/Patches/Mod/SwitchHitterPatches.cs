@@ -1,15 +1,15 @@
-﻿using BetterCombat.Patches.Mod.QuickDraw;
+﻿using BetterCombat.Patches.Mod.SwitchHitter;
 using System;
 
 namespace BetterCombat.Patches.Mod
 {
-    internal class QuickDrawPatches
+    internal class SwitchHitterPatches
     {
         internal static Type[] AllPatches =
         {
-            typeof(UnitBody_set_CurrentHandEquipmentSetIndex_QuickDrawPatch),
-            typeof(UnitViewHandsEquipment_HandleEquipmentSetChanged_QuickDrawPatch),
-            typeof(UnitViewHandsEquipment_HandleEquipmentSlotUpdated_QuickDrawPatch)
+            typeof(UnitBody_set_CurrentHandEquipmentSetIndex_FreeActionPatch),
+            typeof(UnitViewHandsEquipment_HandleEquipmentSetChanged_FreeActionPatch),
+            typeof(UnitViewHandsEquipment_HandleEquipmentSlotUpdated_FreeActionPatch)
 #if DEBUG
             ,typeof(UnitViewHandsEquipment_StartCombatChangeAnimation__LoggerPatch),
             typeof(UnitViewHandsEquipment_UpdateActiveWeaponSetImmediately_LoggerPatch),

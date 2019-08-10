@@ -1,4 +1,5 @@
-﻿using BetterCombat.Data;
+﻿using BetterCombat.Components.Rulebook.EquipItems;
+using BetterCombat.Data;
 using BetterCombat.Helpers;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
@@ -26,6 +27,15 @@ namespace BetterCombat.NewFeats
         internal static BlueprintFeature Create()
         {
             var feat = Library.CreateFeat(Data);
+
+            var freeActionComponent = Library.Create<FreeActionEquipmentChange>(component =>
+            {
+                component.MustHaveFact = feat;
+                component.EmptyHandsOnly = true;
+                component.HandsEquipmentSetChangeOnly = true;
+            });
+
+            feat.AddComponent(freeActionComponent);
 
             var babPrereq = Library.Create<PrerequisiteStatValue>(component =>
             {
@@ -80,15 +90,8 @@ namespace BetterCombat.NewFeats
         [Harmony12.HarmonyPostfix]
         static void Postfix(Locale locale, ref LocalizationPack __result)
         {
-            var nameText = QuickDrawFeat.Data.DisplayNameText;
-            var descriptionText = QuickDrawFeat.Data.DescriptionText;
-            if (!Main.Settings.UseQuickDraw)
-            {
-                descriptionText = "'Use Quick Draw' is disabled in the mod settings. This feat will have no effect";
-                nameText = "Quick Draw (Disabled)";
-            }
-            Localization.AddStringToLocalizationPack(QuickDrawFeat.Data.DisplayNameLocalizationKey, nameText, __result);
-            Localization.AddStringToLocalizationPack(QuickDrawFeat.Data.DescriptionLocalizationKey, descriptionText, __result);
+            Localization.AddStringToLocalizationPack(QuickDrawFeat.Data.DisplayNameLocalizationKey, QuickDrawFeat.Data.DisplayNameText, __result);
+            Localization.AddStringToLocalizationPack(QuickDrawFeat.Data.DescriptionLocalizationKey, QuickDrawFeat.Data.DescriptionText, __result);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace BetterCombat.Helpers
             String oldValue;
             if (!strings.TryGetValue(key, out oldValue)) 
                 Main.Logger?.Write($"Localization.CreateString: localization key `{key}` not present in current pack.");
-            if (value != oldValue)
+            if (value != null && value != oldValue)
                 Main.Logger?.Write($"Localization.CreateString: current pack already has a different value for key `{key}`: `{oldValue}`");
 
             var localized = new LocalizedString();

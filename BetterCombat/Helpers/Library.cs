@@ -4,6 +4,7 @@ using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Selection;
 using Kingmaker.Blueprints.Facts;
 using Kingmaker.Localization;
+using Kingmaker.UnitLogic.Abilities.Blueprints;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,12 +30,41 @@ namespace BetterCombat.Helpers
         public static BlueprintFeature CreateFeat(FeatData featData)
         {
             var feat = Create<BlueprintFeature>();
+            feat.name = featData.Name;
             blueprintScriptableObject_set_AssetId(feat, featData.Guid);
             feat.SetName(Localization.CreateString(featData.DisplayNameLocalizationKey, featData.DisplayNameText));
             feat.SetDescription(Localization.CreateString(featData.DescriptionLocalizationKey, featData.DescriptionText));
             feat.SetIcon(featData.IconAssetGuid);
             feat.Groups = new FeatureGroup[] { FeatureGroup.Feat };
             return feat;
+        }
+
+        static readonly FastSetter blueprintAbility_set_m_IsFullRoundAction = Harmony.CreateFieldSetter<BlueprintAbility>("m_IsFullRoundAction");
+
+        public static BlueprintAbility CreateAbility(AbilityData abilityData)
+        {
+            var ability = Create<BlueprintAbility>();
+            ability.name = abilityData.Name;
+            blueprintScriptableObject_set_AssetId(ability, abilityData.Guid);
+            ability.SetName(Localization.CreateString(abilityData.DisplayNameLocalizationKey, abilityData.DisplayNameText));
+            ability.SetDescription(Localization.CreateString(abilityData.DescriptionLocalizationKey, abilityData.DescriptionText));
+            ability.SetIcon(abilityData.IconAssetGuid);
+            ability.Type = abilityData.Type;
+            ability.Range = abilityData.Range;
+            ability.ActionType = abilityData.ActionType;
+            blueprintAbility_set_m_IsFullRoundAction(ability, abilityData.IsFullRoundAction);
+
+            if (abilityData.DurationLocalizationKey == null)
+                ability.LocalizedDuration = new LocalizedString();
+            else
+                ability.LocalizedDuration = Localization.CreateString(abilityData.DurationLocalizationKey, abilityData.DurationLocalizationText);
+
+            if (abilityData.SavingThrowLocalizationKey == null)
+                ability.LocalizedSavingThrow = new LocalizedString();
+            else
+                ability.LocalizedSavingThrow = Localization.CreateString(abilityData.SavingThrowLocalizationKey, abilityData.SavingThrowLocalizationText);
+
+            return ability;
         }
 
         
@@ -83,7 +113,6 @@ namespace BetterCombat.Helpers
         #endregion
 
         #region Blueprints
-
         static readonly FastSetter blueprintUnitFact_set_Description = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_Description");
         static readonly FastSetter blueprintUnitFact_set_Icon = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_Icon");
         static readonly FastSetter blueprintUnitFact_set_DisplayName = Harmony.CreateFieldSetter<BlueprintUnitFact>("m_DisplayName");

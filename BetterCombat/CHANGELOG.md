@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.2.0
+
+## Added
+- New Feat: [QuickDraw](https://www.d20pfsrd.com/feats/combat-feats/quick-draw-combat/)
+- New Ability: Drop Weapons: free action which throws the currently equipped weapon set to the ground
+
 ## 1.1.2
 
 ### Added

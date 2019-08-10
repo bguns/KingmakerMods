@@ -15,23 +15,16 @@ namespace BetterCombat.Patches.Mod.SwitchHitter
         [Harmony12.HarmonyPrefix]
         static bool Prefix(UnitViewHandsEquipment __instance)
         {
-
-            Main.Logger?.Append("UnitViewHandsEquipment.HandleEquipmentSetChanged prefix triggered");
-            Main.Logger?.Append($"- free action equip: {__instance.Owner.IsFreeEquipmentChange()}");
             if (!(bool)unitViewHandsEquipment_get_Active(__instance))
-            {
-                Main.Logger?.Flush();
                 return true;
-            }
+            
             if (__instance.Owner.IsFreeEquipmentChange() && __instance.InCombat && (__instance.Owner.Descriptor.State.CanAct || __instance.IsDollRoom))
             {
-                Main.Logger?.Append(" - free equipment change, should now trigger UpdateActiveWeaponSetImmediately...");
-                Main.Logger?.Flush();
                 MethodInfo updateImmediately = __instance.GetType().GetMethod("UpdateActiveWeaponSetImmediately", BindingFlags.NonPublic | BindingFlags.Instance);
                 updateImmediately.Invoke(__instance, new object[0]);
                 return false;
             }
-            Main.Logger?.Flush();
+
             return true;
         }
     }

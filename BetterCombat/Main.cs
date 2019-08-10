@@ -9,6 +9,7 @@ using BetterCombat.Patches.Mod;
 using BetterCombat.Patches.Compatibility.CallOfTheWild;
 using BetterCombat.Patches.Compatibility.EldritchArcana;
 using BetterCombat.NewFeats;
+using BetterCombat.NewActions;
 
 namespace BetterCombat
 {
@@ -83,6 +84,11 @@ namespace BetterCombat
             {
                 Logger.Append("Compatibility - Eldritch Arcana: OK");
             }
+
+            HarmonyPatcher.ApplyPatch(typeof(DropWeapons_AddLocalization_Patch), "Drop Weapons");
+            HarmonyPatcher.ApplyPatch(typeof(DropWeapons_AddAction_Patch), "Drop Weapons");
+            HarmonyPatcher.ApplyPatch(typeof(UnitDescriptor_AddDropActionOnInitialize_Patch), "Drop Weapons");
+            HarmonyPatcher.ApplyPatch(typeof(UnitDescriptor_AddDropActionIfNotPresentPostLoad_Patch), "Drop Weapons");
 
             Logger.Flush();
 

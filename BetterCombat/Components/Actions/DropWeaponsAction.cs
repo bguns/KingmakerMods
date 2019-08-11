@@ -30,6 +30,8 @@ namespace BetterCombat.Components.Actions
                 Main.Logger?.Error("Unable to drop weapons: caster is null");
             }
 
+            unit.Commands.InterruptAll();
+
             unit.Descriptor.Body.DropCurrentWeaponSet();
         }
     }

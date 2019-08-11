@@ -24,7 +24,7 @@ namespace BetterCombat.NewAbilities
             "Drop Weapons",                                                    // DisplayName
             "e349ae28-95e3-4dd1-a4dc-87e5581c9f8c",                            // DescriptionLocalizationKey
             "Drop the currently active weapon set to the ground.",             // DescriptionText
-            "45d94c6db453cfc4a9b99b72d6afe6f6",                                // IconAssetId (Disarm Action)
+            "ac8aaf29054f5b74eb18f2af950e752d",                                // IconAssetId (Two-Weapon Fighting)
             AbilityType.Special,                                               // AbilityType
             AbilityRange.Personal,                                             // AbilityRange
             UnitCommand.CommandType.Free,                                      // ActionType

@@ -1,6 +1,7 @@
 ﻿using BetterCombat.Data;
 using BetterCombat.Helpers;
 using Kingmaker.Blueprints;
+using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.Utility;
@@ -20,12 +21,12 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
         [Harmony12.HarmonyPostfix]
         static void Postfix(UnitDescriptor __instance)
         {
-            CombatManeuverData.combatManeuverActionIds.ForEach((key, value) =>
+            foreach(var maneuver in new CombatManeuver[] { CombatManeuver.Disarm, CombatManeuver.Trip, CombatManeuver.SunderArmor })
             {
-                var action = library.Get<BlueprintAbility>(value);
-                if (action != null)
+                var action = library.Get<BlueprintAbility>(CombatManeuverData.combatManeuverActionIds[maneuver]);
+                if (action != null && !__instance.HasFact(action))
                     __instance.AddFact(action);
-            });
+            }
         }
     }
 
@@ -37,12 +38,12 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
         [Harmony12.HarmonyPostfix]
         static void Postfix(UnitDescriptor __instance)
         {
-            CombatManeuverData.combatManeuverActionIds.ForEach((key, value) =>
+            foreach (var maneuver in new CombatManeuver[] { CombatManeuver.Disarm, CombatManeuver.Trip, CombatManeuver.SunderArmor })
             {
-                var action = library.Get<BlueprintAbility>(value);
+                var action = library.Get<BlueprintAbility>(CombatManeuverData.combatManeuverActionIds[maneuver]);
                 if (action != null && !__instance.HasFact(action))
                     __instance.AddFact(action);
-            });
+            }
         }
     }
 }

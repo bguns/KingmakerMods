@@ -13,7 +13,12 @@ namespace BetterCombat.NewAbilities
             typeof(DropWeapons_AddLocalization_Patch),
             typeof(DropWeapons_AddAction_Patch),
             typeof(UnitDescriptor_AddDropActionOnInitialize_Patch),
-            typeof(UnitDescriptor_AddDropActionIfNotPresentPostLoad_Patch)
+            typeof(UnitDescriptor_AddDropActionIfNotPresentPostLoad_Patch),
+
+            typeof(CombatManeuversStandardAbility_AddLocalization_Patch),
+            typeof(CombatManeuversStandardAbility_AddAbility_Patch),
+            typeof(UnitDescriptor_AddCombatManeuversStandardAbilityOnInitialize_Patch),
+            typeof(UnitDescriptor_AddCombatManeuversStandardAbilityPostLoad_Patch)
         };
     }
 }

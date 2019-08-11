@@ -10,6 +10,7 @@ using BetterCombat.Patches.Compatibility.CallOfTheWild;
 using BetterCombat.Patches.Compatibility.EldritchArcana;
 using BetterCombat.NewFeats;
 using BetterCombat.NewAbilities;
+using BetterCombat.Patches.Vanilla.CombatManeuvers;
 
 namespace BetterCombat
 {
@@ -77,6 +78,11 @@ namespace BetterCombat
             if (HarmonyPatcher.ApplyPatches(NewAbilitiesPatches.AllPatches, "New abilities patches"))
             {
                 Logger.Append("New abilities patches: OK");
+            }
+
+            if (HarmonyPatcher.ApplyPatch(typeof(UnitAttack_TriggerAttackRule_CombatManeuverPatch), "Combat manuever as attack"))
+            {
+                Logger.Append("Combat Maneuvers as attack actions patch: OK");
             }
 
             // Compatibility

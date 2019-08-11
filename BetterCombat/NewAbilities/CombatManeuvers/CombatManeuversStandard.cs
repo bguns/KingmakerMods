@@ -10,12 +10,8 @@ using Kingmaker.UnitLogic.Abilities.Components;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.Visual.Animation.Kingmaker.Actions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BetterCombat.NewAbilities
+namespace BetterCombat.NewAbilities.CombatManeuvers
 {
     public class CombatManeuversStandardAbility
     {
@@ -101,7 +97,8 @@ namespace BetterCombat.NewAbilities
         [Harmony12.HarmonyPostfix]
         static void Postfix(UnitDescriptor __instance)
         {
-            foreach (var maneuver in new CombatManeuver[] { CombatManeuver.BullRush, CombatManeuver.DirtyTrickBlind, CombatManeuver.DirtyTrickEntangle, CombatManeuver.DirtyTrickSickened }) {
+            foreach (var maneuver in new CombatManeuver[] { CombatManeuver.BullRush, CombatManeuver.DirtyTrickBlind, CombatManeuver.DirtyTrickEntangle, CombatManeuver.DirtyTrickSickened })
+            {
                 var action = library.Get<BlueprintAbility>(CombatManeuverData.combatManeuverActionIds[maneuver]);
                 if (action != null && __instance.HasFact(action))
                     __instance.RemoveFact(action);

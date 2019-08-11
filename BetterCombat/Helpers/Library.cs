@@ -5,6 +5,7 @@ using Kingmaker.Blueprints.Classes.Selection;
 using Kingmaker.Blueprints.Facts;
 using Kingmaker.Localization;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
+using Kingmaker.UnitLogic.ActivatableAbilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,6 +65,17 @@ namespace BetterCombat.Helpers
             else
                 ability.LocalizedSavingThrow = Localization.CreateString(abilityData.SavingThrowLocalizationKey, abilityData.SavingThrowLocalizationText);
 
+            return ability;
+        }
+
+        public static BlueprintActivatableAbility CreateActivatableAbility(ActivatableAbilityData activatableAbilityData)
+        {
+            var ability = Create<BlueprintActivatableAbility>();
+            ability.name = activatableAbilityData.Name;
+            blueprintScriptableObject_set_AssetId(ability, activatableAbilityData.Guid);
+            ability.SetName(Localization.CreateString(activatableAbilityData.DisplayNameLocalizationKey, activatableAbilityData.DisplayNameText));
+            ability.SetDescription(Localization.CreateString(activatableAbilityData.DescriptionLocalizationKey, activatableAbilityData.DescriptionText));
+            ability.SetIcon(activatableAbilityData.IconAssetGuid);
             return ability;
         }
 

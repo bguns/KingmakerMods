@@ -78,6 +78,28 @@ namespace BetterCombat.Data
             { updatedImprovedCombatManeuverFeatDescriptionKeys[CombatManeuver.SunderArmor], "You do not provoke an attack of opportunity when performing a sunder armor combat maneuver. In addition, you receive a +2 bonus on checks made to sunder the armor of a foe. You also receive a +2 bonus to your Combat Maneuver Defense whenever an opponent tries to sunder your armor." }
         };
 
+        internal static readonly Dictionary<CombatManeuver, string> combatManeuverActionDisplayNameKeys = new Dictionary<CombatManeuver, string>
+        {
+            { CombatManeuver.Trip, "9283fcc1-ba37-4711-93ac-6de17415e10f" }, // Trip
+            { CombatManeuver.BullRush, "be940667-072a-4835-8122-8f32a8337e27" }, // Bull Rush
+            { CombatManeuver.DirtyTrickBlind, "5d23f3f4-77e8-480f-b53f-292ab2aa0238" }, // Dirty Trick - Blindness
+            { CombatManeuver.DirtyTrickEntangle, "614bc7b4-be29-4480-a58d-2d4c1662563c" }, // Dirty Trick - Entangle
+            { CombatManeuver.DirtyTrickSickened, "d8277055-b9f2-4395-911a-b8d09b9f95f7" }, // Dirty Trick - Sickened
+            { CombatManeuver.Disarm,  "d7f35120-78b5-4656-b045-17b9b6b3635c" }, // Disarm
+            { CombatManeuver.SunderArmor, "fd428ed5-beb2-4986-832b-5193f7424f9f" }  // Sunder
+        };
+
+        internal static readonly Dictionary<string, string> combatManeuverActionDisplayNames = new Dictionary<string, string>
+        {
+            { combatManeuverActionDisplayNameKeys[CombatManeuver.Trip],  "Trip"},
+            { combatManeuverActionDisplayNameKeys[CombatManeuver.BullRush], "Bull Rush" },
+            { combatManeuverActionDisplayNameKeys[CombatManeuver.DirtyTrickBlind], "Dirty Trick — Blinded" },
+            { combatManeuverActionDisplayNameKeys[CombatManeuver.DirtyTrickEntangle], "Dirty Trick — Entangled" },
+            { combatManeuverActionDisplayNameKeys[CombatManeuver.DirtyTrickSickened], "Dirty Trick — Sickened" },
+            { combatManeuverActionDisplayNameKeys[CombatManeuver.Disarm], "Disarm" },
+            { combatManeuverActionDisplayNameKeys[CombatManeuver.SunderArmor], "Sunder Armor" }
+        };
+
         internal static readonly Dictionary<CombatManeuver, string> updatedCombatManeuverActionDescriptionKeys = new Dictionary<CombatManeuver, string>
         {
             { CombatManeuver.Trip, "882f2dbb-e005-4b83-bbe0-83aa3230e932" }, // Trip

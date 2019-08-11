@@ -33,8 +33,8 @@ namespace BetterCombat.Patches.Vanilla
     {
         internal static Type[] AllPatches =
         {
-            typeof(UnitDescriptor_AddCombatManeuverActionsOnInitialize_Patch),
-            typeof(UnitDescriptor_AddCombatManeuverActionsIfNotPresentPostLoad_Patch),
+            //typeof(UnitDescriptor_AddCombatManeuverActionsOnInitialize_Patch),
+            //typeof(UnitDescriptor_AddCombatManeuverActionsIfNotPresentPostLoad_Patch),
             typeof(LocalizationManager_FixCombatManeuverFeatText_Patch),
             typeof(RuleCombatManeuver_OnTrigger_ProvokeAoO_Patch),
             typeof(Library_ModifyCombatManeuverFeats_Patch),

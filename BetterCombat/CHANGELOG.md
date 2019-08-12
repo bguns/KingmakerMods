@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 - New Feat: [QuickDraw](https://www.d20pfsrd.com/feats/combat-feats/quick-draw-combat/)
 - New Ability: Drop Weapons: free action which throws the currently equipped weapon set to the ground
+- Added grouping ability for Standard Action Combat Maneuvers
+- Trip, Disarm and Sunder Armor can now be used in place of a melee attack (including attacks of opportunity)
+- Added toggleable abilities for each of the Combat Maneuvers that can be used in place of a melee attack.
 
 ## 1.1.2
 

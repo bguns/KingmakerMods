@@ -1,4 +1,6 @@
-﻿using Kingmaker.Controllers.Combat;
+﻿using BetterCombat.Helpers;
+using BetterCombat.Patches.Vanilla.CombatManeuvers;
+using Kingmaker.Controllers.Combat;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.PubSubSystem;
@@ -69,14 +71,24 @@ namespace BetterCombat.Patches.Vanilla.AttackOfOpportunity
             //  EventBus.RaiseEvent<IAttackOfOpportunityHandler>((Action<IAttackOfOpportunityHandler>)(h => h.HandleAttackOfOpportunity(__instance.Unit, target)));
             //  === Original End   ===
             //  === Changed Start  ===
+
             RuleAttackWithWeapon aoo = new RuleAttackWithWeapon(__instance.Unit, target, __instance.Unit.GetThreatHand().Weapon, 0)
             {
                 IsAttackOfOpportunity = true
             };
+            var combatManeuver = __instance.Unit.GetActiveCombatManeuverToggle();
+
             if (!target.Descriptor.State.IsDead)
             {
                 EventBus.RaiseEvent<IAttackOfOpportunityHandler>(h => h.HandleAttackOfOpportunity(__instance.Unit, target));
-                Rulebook.Trigger(aoo);
+                if (combatManeuver != CombatManeuver.None)
+                {
+                    __instance.Unit.TriggerAttackReplacementCombatManeuver(target, __instance.Unit.GetThreatHand().Weapon, 0, combatManeuver);
+                }
+                else
+                {
+                    Rulebook.Trigger(aoo);
+                }
             }
             // === Changed End    ===
 
@@ -85,7 +97,7 @@ namespace BetterCombat.Patches.Vanilla.AttackOfOpportunity
             --__instance.AttackOfOpportunityCount;
 
             // ===  Added start  === (from UnitAttack.TriggerAttackRule)
-            if (target.View != null && target.View.HitFxManager != null)
+            if (combatManeuver != CombatManeuver.None && target.View != null && target.View.HitFxManager != null)
                 target.View.HitFxManager.HandleAttackHit(aoo);
             // ===  Added end    ===
 

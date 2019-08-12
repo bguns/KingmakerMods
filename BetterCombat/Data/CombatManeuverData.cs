@@ -1,4 +1,7 @@
-﻿using Kingmaker.RuleSystem.Rules;
+﻿using BetterCombat.Helpers;
+using BetterCombat.NewAbilities.CombatManeuvers;
+using Kingmaker.RuleSystem.Rules;
+using Kingmaker.UnitLogic.ActivatableAbilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BetterCombat.Data
 {
-    internal class CombatManeuverData
+    public class CombatManeuverData
     {
         #region BlueprintIds
 
@@ -118,12 +121,45 @@ namespace BetterCombat.Data
             { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.DirtyTrickBlind], "You can attempt to hinder a foe in melee as a standard action. If you do not have the Improved Dirty Trick feat or a similar ability, attempting a dirty trick provokes an attack of opportunity from the target of your maneuver.\nIf your attack is successful, the target is blinded.\nThis condition lasts for 1 round. For every 5 by which your attack exceeds your opponent's CMD, the penalty lasts 1 additional round." },
             { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.DirtyTrickEntangle], "You can attempt to hinder a foe in melee as a standard action. If you do not have the Improved Dirty Trick feat or a similar ability, attempting a dirty trick provokes an attack of opportunity from the target of your maneuver.\nIf your attack is successful, the target is entangled.\nThis condition lasts for 1 round. For every 5 by which your attack exceeds your opponent's CMD, the penalty lasts 1 additional round." },
             { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.DirtyTrickSickened], "You can attempt to hinder a foe in melee as a standard action. If you do not have the Improved Dirty Trick feat or a similar ability, attempting a dirty trick provokes an attack of opportunity from the target of your maneuver.\nIf your attack is successful, the target is sickened.\nThis condition lasts for 1 round. For every 5 by which your attack exceeds your opponent's CMD, the penalty lasts 1 additional round." },
-            { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.Disarm], "You can attempt to disarm a foe in melee as a standard action.  If you do not have the Improved Disarm feat, or a similar ability, attempting to disarm a foe provokes an attack of opportunity from the target of your maneuver.\nIf your combat maneuver is successful, the target cannot use his weapons for 1 round.\nFor every 5 by which your attack exceeds your opponent's CMD, the disarmed condition lasts 1 additional round." },
-            { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.SunderArmor], "You can attempt to dislodge a piece of armor worn by your opponent. If you do not have the Improved Sunder feat, or a similar ability, attempting to sunder armor provokes an attack of opportunity from the target of your maneuver.\nIf your combat maneuver is successful, the target loses its bonuses from armor for 1 round.\nFor every 5 by which your attack exceeds your opponent's CMD, the penalty lasts 1 additional round." }
+            { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.Disarm], "You can attempt to disarm a foe in place of a melee attack.  If you do not have the Improved Disarm feat, or a similar ability, attempting to disarm a foe provokes an attack of opportunity from the target of your maneuver.\nIf your combat maneuver is successful, the target cannot use his weapons for 1 round.\nFor every 5 by which your attack exceeds your opponent's CMD, the disarmed condition lasts 1 additional round." },
+            { updatedCombatManeuverActionDescriptionKeys[CombatManeuver.SunderArmor], "You can attempt to dislodge a piece of armor worn by your opponent, in place of a melee attack. If you do not have the Improved Sunder feat, or a similar ability, attempting to sunder armor provokes an attack of opportunity from the target of your maneuver.\nIf your combat maneuver is successful, the target loses its bonuses from armor for 1 round.\nFor every 5 by which your attack exceeds your opponent's CMD, the penalty lasts 1 additional round." }
         };
 
         #endregion
 
-        
+        #region ToggleAbilitiesCache
+        private static BlueprintActivatableAbility _tripToggle;
+        public static BlueprintActivatableAbility TripToggle
+        {
+            get
+            {
+                if (_tripToggle == null)
+                    _tripToggle = Main.Library.Get<BlueprintActivatableAbility>(TripToggleAbility.Data.Guid);
+                return _tripToggle;
+            }
+        }
+
+        private static BlueprintActivatableAbility _disarmToggle;
+        public static BlueprintActivatableAbility DisarmToggle
+        {
+            get
+            {
+                if (_disarmToggle == null)
+                    _disarmToggle = Main.Library.Get<BlueprintActivatableAbility>(DisarmToggleAbility.Data.Guid);
+                return _disarmToggle;
+            }
+        }
+
+        private static BlueprintActivatableAbility _sunderArmorToggle;
+        public static BlueprintActivatableAbility SunderArmorToggle
+        {
+            get
+            {
+                if (_sunderArmorToggle == null)
+                    _sunderArmorToggle = Main.Library.Get<BlueprintActivatableAbility>(SunderArmorToggleAbility.Data.Guid);
+                return _sunderArmorToggle;
+            }
+        }
+        #endregion
     }
 }

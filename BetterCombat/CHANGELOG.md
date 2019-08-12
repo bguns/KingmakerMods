@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.2.0
 
-## Added
+### Added
 - New Feat: [QuickDraw](https://www.d20pfsrd.com/feats/combat-feats/quick-draw-combat/)
 - New Ability: Drop Weapons: free action which throws the currently equipped weapon set to the ground
 - Added grouping ability for Standard Action Combat Maneuvers

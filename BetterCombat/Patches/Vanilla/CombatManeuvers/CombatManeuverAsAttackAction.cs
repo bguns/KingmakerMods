@@ -1,4 +1,6 @@
 ﻿using BetterCombat.Helpers;
+using BetterCombat.Rules.CombatManeuvers;
+using Kingmaker.RuleSystem;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic.Commands;
 using System.Collections.Generic;
@@ -14,10 +16,7 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
        
         static bool Prefix(UnitAttack __instance, AttackHandInfo attack)
         {
-            if (!attack.Weapon.Blueprint.IsMelee)
-                return true;
-
-            var combatManeuver = __instance.Executor.GetActiveCombatManeuverToggle();
+            var combatManeuver = Rulebook.Trigger(new RuleCheckCombatManeuverReplaceAttack(__instance.Executor, __instance.Target, attack)).Result;
 
             if (combatManeuver == CombatManeuver.None)
                 return true;

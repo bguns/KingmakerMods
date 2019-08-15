@@ -41,6 +41,8 @@ namespace BetterCombat.Data
             { "b789cfc41fa326f419d77efc2e5c6632", "TwoHandedFighterPiledriverBullRushAbility"}
         };
 
+        internal static string tandemTripAssetId = "d26eb8ab2aabd0e45a4d7eec0340bbce";
+
         #endregion
 
         #region Localization

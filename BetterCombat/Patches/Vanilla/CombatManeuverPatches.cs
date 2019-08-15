@@ -13,7 +13,8 @@ namespace BetterCombat.Patches.Vanilla
             typeof(ManeuverOnAttack_OnEventDidTrigger_NoAoO_Patch),
             typeof(ContextActionBreakFree_RunAction_NoAoO_Patch),
             typeof(LibraryScriptableObject_CombatManeuverContextActions_Patch),
-            typeof(CombatManeuverToggleGroupPatch)
+            typeof(CombatManeuverToggleGroupPatch),
+            typeof(Library_TandemTripPrerequisites_Patch)
         };
     }  
 }

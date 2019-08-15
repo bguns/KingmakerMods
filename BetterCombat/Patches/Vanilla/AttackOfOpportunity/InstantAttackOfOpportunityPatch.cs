@@ -1,5 +1,6 @@
 ﻿using BetterCombat.Helpers;
 using BetterCombat.Patches.Vanilla.CombatManeuvers;
+using BetterCombat.Rules.CombatManeuvers;
 using Kingmaker.Controllers.Combat;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.EntitySystem.Stats;
@@ -76,7 +77,7 @@ namespace BetterCombat.Patches.Vanilla.AttackOfOpportunity
             {
                 IsAttackOfOpportunity = true
             };
-            var combatManeuver = __instance.Unit.GetActiveCombatManeuverToggle();
+            var combatManeuver = Rulebook.Trigger(new RuleCheckCombatManeuverReplaceAttack(__instance.Unit, target, __instance.Unit.GetThreatHand().Weapon.Blueprint)).Result;
 
             if (!target.Descriptor.State.IsDead)
             {

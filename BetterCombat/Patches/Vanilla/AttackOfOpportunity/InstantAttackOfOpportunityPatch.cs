@@ -98,7 +98,7 @@ namespace BetterCombat.Patches.Vanilla.AttackOfOpportunity
             --__instance.AttackOfOpportunityCount;
 
             // ===  Added start  === (from UnitAttack.TriggerAttackRule)
-            if (combatManeuver != CombatManeuver.None && target.View != null && target.View.HitFxManager != null)
+            if (combatManeuver == CombatManeuver.None && target.View != null && target.View.HitFxManager != null)
                 target.View.HitFxManager.HandleAttackHit(aoo);
             // ===  Added end    ===
 

@@ -27,7 +27,6 @@ namespace BetterCombat.Components.Rulebook.CombatManeuvers
         {
             if (evt.Type == ManeuverType)
             {
-                Main.Logger?.Write("Combat Maneuver will not trigger AoO");
                 CombatManeuverProvokeAttack.DoNotTriggerAoOForNextCombatManeuver(evt.Initiator);
             }
         }

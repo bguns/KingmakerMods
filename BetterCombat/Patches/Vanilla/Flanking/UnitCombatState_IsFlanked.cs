@@ -52,7 +52,7 @@ namespace BetterCombat.Patches.Vanilla.Flanking
 
         public static FlankingParameters? PopFlankingParametersIfTypeMatches(Type patchType)
         {
-            if (flankingParameters.Count >= 0 && flankingParameters.Peek().PatchType.Equals(patchType))
+            if (flankingParameters.Count > 0 && flankingParameters.Peek().PatchType.Equals(patchType))
             {
                 return flankingParameters.Pop();
             }

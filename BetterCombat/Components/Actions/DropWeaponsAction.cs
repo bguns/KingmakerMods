@@ -1,6 +1,7 @@
 ﻿using BetterCombat.Helpers;
 using Kingmaker.ElementsSystem;
 using Kingmaker.EntitySystem.Entities;
+using Kingmaker.Items.Slots;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 
@@ -30,9 +31,17 @@ namespace BetterCombat.Components.Actions
                 Main.Logger?.Error("Unable to drop weapons: caster is null");
             }
 
-            unit.Commands.InterruptAll();
+            if (unit.Descriptor.IsPet || unit.Body.IsPolymorphed)
+                return;
 
-            unit.Descriptor.Body.DropCurrentWeaponSet();
+            var currentWeaponSet = unit.Body.CurrentHandsEquipmentSet;
+
+            if (currentWeaponSet.PrimaryHand.CanDrop() || currentWeaponSet.SecondaryHand.CanDrop())
+            {
+                unit.Commands.InterruptAll();
+
+                unit.Descriptor.Body.DropCurrentWeaponSet();
+            }
         }
     }
 }

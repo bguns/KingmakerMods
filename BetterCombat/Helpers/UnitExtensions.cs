@@ -6,6 +6,7 @@ using Kingmaker.Blueprints.Root;
 using Kingmaker.EntitySystem;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.Items;
+using Kingmaker.Items.Slots;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.RuleSystem.Rules.Abilities;
 using Kingmaker.UI.CombatText;
@@ -39,18 +40,23 @@ namespace BetterCombat.Helpers
                 droppedLoot.Loot = new ItemsCollection();
             }
 
-            if (equipmentSet.PrimaryHand.HasItem)
+            if (equipmentSet.PrimaryHand.CanDrop())
             {
                 ItemEntity primary = equipmentSet.PrimaryHand.Item;
                 primary.Collection.Transfer(primary, droppedLoot.Loot);
             }
-            if (equipmentSet.SecondaryHand.HasItem)
+            if (equipmentSet.SecondaryHand.CanDrop())
             {
                 ItemEntity secondary = equipmentSet.SecondaryHand.Item;
                 secondary.Collection.Transfer(secondary, droppedLoot.Loot);
             }
 
             unitBody.Owner.Unit.SetFreeEquipmentChange(false);
+        }
+
+        public static bool CanDrop(this HandSlot hand)
+        {
+            return hand.HasItem && !hand.Item.IsNonRemovable && (!hand.HasWeapon || !hand.Weapon.Blueprint.IsNatural);
         }
 
         private static FastGetter overtipManager_get_m_UnitControllers = Harmony.CreateFieldGetter<OvertipManager>("m_UnitControllers");

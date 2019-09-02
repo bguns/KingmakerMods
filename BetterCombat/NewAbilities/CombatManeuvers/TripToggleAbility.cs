@@ -26,7 +26,8 @@ namespace BetterCombat.NewAbilities.CombatManeuvers
             CombatManeuverData.updatedCombatManeuverActionDescriptions[
                 CombatManeuverData.updatedCombatManeuverActionDescriptionKeys[CombatManeuver.Trip]
                 ],                                                                                  // DescriptionText
-            CombatManeuverData.combatManeuverActionIds[CombatManeuver.Trip]                         // IconAssetId (Trip Action)
+            CombatManeuverData.combatManeuverActionIds[CombatManeuver.Trip],                         // IconAssetId (Trip Action)
+            null                                                                                    // IconFileName
             );
 
         internal static BlueprintActivatableAbility Create()

@@ -25,6 +25,7 @@ namespace BetterCombat.NewAbilities
             "e349ae28-95e3-4dd1-a4dc-87e5581c9f8c",                            // DescriptionLocalizationKey
             "Drop the currently active weapon set to the ground.",             // DescriptionText
             "ac8aaf29054f5b74eb18f2af950e752d",                                // IconAssetId (Two-Weapon Fighting)
+            null,                                                              // IconFileName
             AbilityType.Special,                                               // AbilityType
             AbilityRange.Personal,                                             // AbilityRange
             UnitCommand.CommandType.Free,                                      // ActionType

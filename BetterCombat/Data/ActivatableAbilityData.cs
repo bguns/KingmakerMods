@@ -15,8 +15,9 @@ namespace BetterCombat.Data
         internal readonly string DescriptionLocalizationKey;
         internal readonly string DescriptionText;
         internal readonly string IconAssetGuid;
+        internal readonly string IconFileName;
 
-        public ActivatableAbilityData(string guid, string name, string displayNameLocalizationKey, string displayNameText, string descriptionLocalizationKey, string descriptionText, string iconAssetGuid)
+        public ActivatableAbilityData(string guid, string name, string displayNameLocalizationKey, string displayNameText, string descriptionLocalizationKey, string descriptionText, string iconAssetGuid, string iconFileName)
         {
             Guid = guid;
             Name = name;
@@ -25,6 +26,7 @@ namespace BetterCombat.Data
             DescriptionLocalizationKey = descriptionLocalizationKey;
             DescriptionText = descriptionText;
             IconAssetGuid = iconAssetGuid;
+            IconFileName = iconFileName;
         }
     }
 }

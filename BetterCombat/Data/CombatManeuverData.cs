@@ -45,7 +45,30 @@ namespace BetterCombat.Data
 
         #endregion
 
-        #region Localization
+        #region Icons
+
+        internal static readonly Dictionary<CombatManeuver, string> combatManeuverActionIcons = new Dictionary<CombatManeuver, string>
+        {
+            { CombatManeuver.BullRush, "Icon_Bull_Rush.png" },
+            { CombatManeuver.DirtyTrickBlind, "Icon_Dirty_Trick_Blinded.png" },
+            { CombatManeuver.DirtyTrickEntangle, "Icon_Dirty_Trick_Entangled.png" },
+            { CombatManeuver.DirtyTrickSickened, "Icon_Dirty_Trick_Sickened.png" },
+            { CombatManeuver.Disarm, "Icon_Disarm.png" },
+            { CombatManeuver.SunderArmor, "Icon_Sunder_Armor.png" }
+        };
+
+        internal static readonly Dictionary<CombatManeuver, string> improvedCombatManeuverFeatIcons = new Dictionary<CombatManeuver, string>
+        {
+            { CombatManeuver.Trip, "Icon_Trip_Improved.png" },
+            { CombatManeuver.BullRush, "Icon_Bull_Rush_Improved.png" },
+            { CombatManeuver.DirtyTrickBlind, "Icon_Dirty_Trick_Blinded_Improved.png" },
+            { CombatManeuver.Disarm, "Icon_Disarm_Improved.png" },
+            { CombatManeuver.SunderArmor, "Icon_Sunder_Armor_Improved.png" }
+        };
+
+        #endregion
+
+            #region Localization
 
         internal static readonly Dictionary<CombatManeuver, string> newImprovedCombatManeuverFeatNameKeys = new Dictionary<CombatManeuver, string>
         {

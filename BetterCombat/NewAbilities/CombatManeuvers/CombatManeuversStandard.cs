@@ -22,7 +22,8 @@ namespace BetterCombat.NewAbilities.CombatManeuvers
             "Combat Maneuvers (Standard Action)",                              // DisplayName
             "77e529c6-aadc-4f4e-a1cf-8ef053a926c1",                            // DescriptionLocalizationKey
             "Perform a Standard action Combat Maneuver",                       // DescriptionText
-            "ed699d64870044b43bb5a7fbe3f29494",                                // IconAssetId (Improved Dirty Trick)
+            "ed699d64870044b43bb5a7fbe3f29494",                                // IconAssetId (Improved Dirty Trick),
+            null,
             AbilityType.Special,                                               // AbilityType
             AbilityRange.Touch,                                                // AbilityRange
             UnitCommand.CommandType.Standard,                                  // ActionType

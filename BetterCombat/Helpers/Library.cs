@@ -49,7 +49,10 @@ namespace BetterCombat.Helpers
             blueprintScriptableObject_set_AssetId(ability, abilityData.Guid);
             ability.SetName(Localization.CreateString(abilityData.DisplayNameLocalizationKey, abilityData.DisplayNameText));
             ability.SetDescription(Localization.CreateString(abilityData.DescriptionLocalizationKey, abilityData.DescriptionText));
-            ability.SetIcon(abilityData.IconAssetGuid);
+            if (abilityData.IconAssetGuid != null)
+                ability.SetIcon(abilityData.IconAssetGuid);
+            else if (abilityData.IconFileName != null)
+                ability.SetIcon(LoadIcons.Load(LoadIcons.IconsFolder + abilityData.IconFileName));
             ability.Type = abilityData.Type;
             ability.Range = abilityData.Range;
             ability.ActionType = abilityData.ActionType;
@@ -75,7 +78,10 @@ namespace BetterCombat.Helpers
             blueprintScriptableObject_set_AssetId(ability, activatableAbilityData.Guid);
             ability.SetName(Localization.CreateString(activatableAbilityData.DisplayNameLocalizationKey, activatableAbilityData.DisplayNameText));
             ability.SetDescription(Localization.CreateString(activatableAbilityData.DescriptionLocalizationKey, activatableAbilityData.DescriptionText));
-            ability.SetIcon(activatableAbilityData.IconAssetGuid);
+            if (activatableAbilityData.IconAssetGuid != null)
+                ability.SetIcon(activatableAbilityData.IconAssetGuid);
+            else if (activatableAbilityData.IconFileName != null)
+                ability.SetIcon(LoadIcons.Load(LoadIcons.IconsFolder + activatableAbilityData.IconFileName));
             return ability;
         }
 

@@ -23,7 +23,8 @@ namespace BetterCombat.NewAbilities.CombatManeuvers
             CombatManeuverData.updatedCombatManeuverActionDescriptions[
                 CombatManeuverData.updatedCombatManeuverActionDescriptionKeys[CombatManeuver.Disarm]
                 ],                                                                                      // DescriptionText
-            CombatManeuverData.combatManeuverActionIds[CombatManeuver.Disarm]                           // IconAssetId (Disarm Action)
+            null,                                                                                         // IconAssetId
+            CombatManeuverData.combatManeuverActionIcons[CombatManeuver.Disarm]                           // IconFileName
             );
 
         internal static BlueprintActivatableAbility Create()

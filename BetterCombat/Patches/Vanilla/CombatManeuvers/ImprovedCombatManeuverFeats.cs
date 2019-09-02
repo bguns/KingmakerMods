@@ -37,6 +37,7 @@ namespace BetterCombat.Patches.Vanilla.CombatManeuvers
                     improvedCombatManeuverFeat.RemoveComponent(improvedCombatManeuverFeat.GetComponent<AddFacts>());
                     improvedCombatManeuverFeat.SetName(Localization.CreateString(CombatManeuverData.newImprovedCombatManeuverFeatNameKeys[combatManeuver], CombatManeuverData.newImprovedCombatManeuverFeatNames[CombatManeuverData.newImprovedCombatManeuverFeatNameKeys[combatManeuver]]));
                     improvedCombatManeuverFeat.AddComponent(CombatManeuverDoNotProvokeAttack.Create(combatManeuver));
+                    improvedCombatManeuverFeat.SetIcon(LoadIcons.Load(LoadIcons.IconsFolder + CombatManeuverData.improvedCombatManeuverFeatIcons[combatManeuver]));
                 }
             }
 

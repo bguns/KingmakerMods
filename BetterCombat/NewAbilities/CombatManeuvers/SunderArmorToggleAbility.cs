@@ -23,7 +23,9 @@ namespace BetterCombat.NewAbilities.CombatManeuvers
             CombatManeuverData.updatedCombatManeuverActionDescriptions[
                 CombatManeuverData.updatedCombatManeuverActionDescriptionKeys[CombatManeuver.SunderArmor]
                 ],                                                                                           // DescriptionText
-            CombatManeuverData.combatManeuverActionIds[CombatManeuver.SunderArmor]                           // IconAssetId (Sunder Armor Action)
+            //CombatManeuverData.combatManeuverActionIds[CombatManeuver.SunderArmor]                           // IconAssetId (Sunder Armor Action)
+            null,                                                                                             // IconAssetId
+            CombatManeuverData.combatManeuverActionIcons[CombatManeuver.SunderArmor]                          // IconFileName
             );
 
         internal static BlueprintActivatableAbility Create()

@@ -12,6 +12,7 @@ namespace BetterCombat.Data
         internal readonly string DescriptionLocalizationKey;
         internal readonly string DescriptionText;
         internal readonly string IconAssetGuid;
+        internal readonly string IconFileName;
         internal readonly AbilityType Type;
         internal readonly AbilityRange Range;
         internal readonly UnitCommand.CommandType ActionType;
@@ -21,7 +22,7 @@ namespace BetterCombat.Data
         internal readonly string SavingThrowLocalizationKey;
         internal readonly string SavingThrowLocalizationText;
 
-        public AbilityData(string guid, string name, string displayNameLocalizationKey, string displayNameText, string descriptionLocalizationKey, string descriptionText, string iconAssetGuid, 
+        public AbilityData(string guid, string name, string displayNameLocalizationKey, string displayNameText, string descriptionLocalizationKey, string descriptionText, string iconAssetGuid, string iconFileName,
             AbilityType type, AbilityRange range, UnitCommand.CommandType actionType, bool isFullRoundAction, string durationLocalizationKey = null, string durationLocalizationText = null, 
             string savingThrowLocalizationKey = null, string savingThrowLocalizationText = null)
         {
@@ -32,6 +33,7 @@ namespace BetterCombat.Data
             DescriptionLocalizationKey = descriptionLocalizationKey;
             DescriptionText = descriptionText;
             IconAssetGuid = iconAssetGuid;
+            IconFileName = iconFileName;
             Type = type;
             Range = range;
             ActionType = actionType;
